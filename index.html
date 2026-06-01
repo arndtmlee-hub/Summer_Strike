@@ -278,24 +278,28 @@ function badgeLabel(type) {
 }
 
 function cycleDay(d) {
+  // Cycle through types. Before checking caps, exclude current day from counts.
+  const order = ['intense', 'light', 'rest', 'unset'];
   const current = schedule[d] || 'unset';
-  const counts = getCounts();
-  // cycle: intense → light → rest → unset
-  let next;
-  if (current === 'unset' || current === 'rest') {
-    next = counts.intense < 3 ? 'intense' : (counts.light < 3 ? 'light' : 'rest');
-  } else if (current === 'intense') {
-    next = counts.light < 3 ? 'light' : 'rest';
-  } else if (current === 'light') {
-    next = counts.rest < 1 ? 'rest' : 'unset';
-  } else {
-    next = 'unset';
+  const currentIdx = order.indexOf(current);
+  // Get counts without this day
+  const others = DAYS.filter(x => x !== d);
+  const oc = others.reduce((acc, x) => {
+    const t = schedule[x] || 'unset'; acc[t] = (acc[t]||0)+1; return acc;
+  }, {intense:0,light:0,rest:0,unset:0});
+  // Try each next type in cycle order
+  const caps = {intense:3, light:3, rest:1, unset:99};
+  for (let i = 1; i <= order.length; i++) {
+    const candidate = order[(currentIdx + i) % order.length];
+    if ((oc[candidate]||0) < caps[candidate]) {
+      schedule[d] = candidate;
+      break;
+    }
   }
-  schedule[d] = next;
-  const el = document.getElementById(`dp_${d}`);
-  el.className = `dp-day ${next !== 'unset' ? next : ''}`;
-  el.querySelector('.dp-badge').textContent = badgeLabel(next);
-  el.querySelector('.dp-day-name').textContent = d;
+  const el = document.getElementById('dp_' + d);
+  const t = schedule[d] || 'unset';
+  el.className = 'dp-day ' + (t !== 'unset' ? t : '');
+  el.querySelector('.dp-badge').textContent = badgeLabel(t);
   updateCounters();
 }
 
@@ -316,16 +320,20 @@ function updateCounters() {
   const btn  = document.getElementById('startBtn');
   const assigned = c.intense + c.light + c.rest;
   if (c.intense < 3) {
-    warn.textContent = `Select ${3 - c.intense} more intense day${3-c.intense>1?'s':''}.`;
+    warn.textContent = 'Select ' + (3-c.intense) + ' more intense day' + (3-c.intense>1?'s':'') + '.';
+    warn.style.color = 'var(--kick-color)';
     btn.disabled = true;
   } else if (c.light < 3) {
-    warn.textContent = `Select ${3 - c.light} more light day${3-c.light>1?'s':''}.`;
+    warn.textContent = 'Select ' + (3-c.light) + ' more light day' + (3-c.light>1?'s':'') + '.';
+    warn.style.color = 'var(--kick-color)';
     btn.disabled = true;
   } else if (c.rest < 1) {
     warn.textContent = 'Select 1 rest day.';
+    warn.style.color = 'var(--kick-color)';
     btn.disabled = true;
   } else if (assigned < 7) {
-    warn.textContent = `Assign all 7 days (${7-assigned} remaining).`;
+    warn.textContent = 'Assign all 7 days (' + (7-assigned) + ' remaining).';
+    warn.style.color = 'var(--kick-color)';
     btn.disabled = true;
   } else {
     warn.textContent = '✓ Schedule looks great!';
