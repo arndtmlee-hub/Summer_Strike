@@ -1051,3 +1051,37 @@ function updateDayInPlace(pi, wk, day) {
   const card = document.getElementById(`dc_${pi}_${wk}_${day}`);
   if (!card) return;
  
+  const allChecked = s.checklist.every((_, ii) => appState[getKey(pi, wk, day, ii)]);
+  const checkedCount = s.checklist.filter((_, ii) => appState[getKey(pi, wk, day, ii)]).length;
+  card.classList.toggle('completed-card', allChecked && s.checklist.length > 0);
+  const ctr = document.getElementById('ctr_' + pi + '_' + wk + '_' + day);
+  if (ctr) ctr.textContent = checkedCount + '/' + s.checklist.length;
+  const doneBtn = card.querySelector('.day-check');
+  if (doneBtn) doneBtn.classList.toggle('done', allChecked && s.checklist.length > 0);
+  card.querySelectorAll('.checklist li').forEach((li, idx) => {
+    li.classList.toggle('checked', !!appState[getKey(pi, wk, day, idx)]);
+  });
+}
+
+function startApp() {
+  persist();
+  document.getElementById('setupScreen').style.display = 'none';
+  document.getElementById('mainApp').style.display = 'block';
+  renderPhaseTabs();
+  renderCurrentPhase();
+}
+
+function editSchedule() {
+  document.getElementById('mainApp').style.display = 'none';
+  document.getElementById('setupScreen').style.display = 'block';
+  buildPicker();
+}
+
+// INIT
+buildPicker();
+if (Object.keys(schedule).length === 7 && !Object.values(schedule).includes('unset')) {
+  startApp();
+}
+</script>
+</body>
+</html>
