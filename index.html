@@ -76,17 +76,25 @@ body{background:#000;color:var(--white);font-family:'DM Sans',sans-serif;font-si
 .task-list{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
 .task-card{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
 .task-card.done{border-color:rgba(184,245,54,.35)}
-.task-top{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer}
-.task-cb{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;transition:all .2s}
+.task-top{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;cursor:pointer}
+.task-cb{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;transition:all .2s;margin-top:1px}
 .task-card.done .task-cb{background:var(--lime);border-color:var(--lime);color:#111}
-.task-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);flex-shrink:0;width:14px}
-.task-text{flex:1;font-size:14px;font-weight:500}
-.task-card.done .task-text{color:var(--muted);text-decoration:line-through}
-.task-watch{flex-shrink:0;font-size:11px;color:var(--muted);text-decoration:none;padding:5px 10px;border-radius:5px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);white-space:nowrap;transition:all .15s}
+.task-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);flex-shrink:0;width:14px;margin-top:3px}
+.task-body{flex:1;min-width:0}
+.task-badge{display:inline-block;font-size:9px;letter-spacing:1px;text-transform:uppercase;font-weight:700;padding:2px 7px;border-radius:3px;margin-bottom:5px}
+.task-badge.warmup{background:rgba(184,245,54,.12);color:var(--lime-dim)}
+.task-badge.watchbadge{background:rgba(56,189,248,.12);color:var(--iq)}
+.task-badge.dobadge{background:rgba(245,158,11,.12);color:var(--speed)}
+.task-text-main{font-size:14px;font-weight:600;color:var(--white);line-height:1.4}
+.task-card.done .task-text-main{color:var(--muted);text-decoration:line-through}
+.task-setup{font-size:12.5px;color:var(--off);line-height:1.6;margin-top:4px}
+.task-card.done .task-setup{color:var(--muted)}
+.task-reps{font-size:11px;color:var(--lime-dim);font-weight:600;margin-top:5px;font-family:'DM Mono',monospace}
+.task-card.done .task-reps{color:var(--muted)}
+.task-watch{flex-shrink:0;font-size:11px;color:var(--muted);text-decoration:none;padding:6px 11px;border-radius:5px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);white-space:nowrap;transition:all .15s;margin-top:1px}
 .task-watch:hover{color:var(--lime);border-color:rgba(184,245,54,.3)}
 .task-card.warmup{border-style:dashed;background:rgba(255,255,255,.015)}
 .task-card.warmup .task-num{color:var(--lime-dim)}
-.warmup-badge{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--lime-dim);font-weight:700;margin-right:4px}
 
 .complete-btn{width:100%;padding:14px;border-radius:10px;border:none;background:var(--lime);color:#0d1a0d;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .15s}
 .complete-btn:hover{background:#cffb50}
@@ -140,52 +148,53 @@ const TRACKS = {
     levels: [
       {
         title: 'Speed — Level 1: First Steps',
-        desc: 'Learn the basic sprint position and how to push off the ground hard. Just 3 simple things today.',
+        desc: 'Learn the basic sprint position and how to push off the ground hard.',
         tasks: [
-          {t:'Warm up first — 5 min dynamic warm-up (leg swings, high knees, hip circles)', v:'https://www.youtube.com/shorts/BJTLAs43nkE', warmup:true},
-          {t:'Watch the short clip on sprint starts', v:'https://www.youtube.com/shorts/YQ2IGUOrt6Q'},
-          {t:'5 falling starts — lean forward until you have to run', v:'https://www.youtube.com/watch?v=_u5pyVYjmgk'},
-          {t:'5 sprints of 15m — go as fast as you can, walk back to rest', v:'https://www.youtube.com/watch?v=2Dt2DbjAKbo'}
+          {kind:'warmup', t:'Dynamic warm-up', setup:'5 minutes: leg swings, high knees, hip circles.', v:'https://www.youtube.com/shorts/BJTLAs43nkE'},
+          {kind:'watch', t:'Watch: how to set up a falling start', v:'https://www.youtube.com/watch?v=_u5pyVYjmgk'},
+          {kind:'do', t:'Falling starts', setup:'Stand tall, lean forward from your ankles until you have to catch yourself with a sprint step.', reps:'5 reps', v:'https://www.youtube.com/watch?v=_u5pyVYjmgk'},
+          {kind:'do', t:'Sprints', setup:'Mark a 15m line with 2 cones. Sprint as fast as you can from one to the other, walk back to recover.', reps:'5 reps', v:'https://www.youtube.com/watch?v=2Dt2DbjAKbo'}
         ]
       },
       {
         title: 'Speed — Level 2: Building Speed',
         desc: 'Now we add more sprints and a longer distance. Push a little harder than last time.',
         tasks: [
-          {t:'Warm up first — 5 min dynamic warm-up (leg swings, high knees, hip circles)', v:'https://www.youtube.com/shorts/BJTLAs43nkE', warmup:true},
-          {t:'A-skip drill — 2 sets of 15m, focus on knee drive', v:'https://www.youtube.com/watch?v=twmQ9cpCI48'},
-          {t:'6 sprints of 20m — full rest between each one', v:'https://www.youtube.com/watch?v=2Dt2DbjAKbo'},
-          {t:'Agility ladder — 2 trips through, any pattern', v:'https://www.youtube.com/watch?v=6NnGQl-TZHs'}
+          {kind:'warmup', t:'Dynamic warm-up', setup:'5 minutes: leg swings, high knees, hip circles.', v:'https://www.youtube.com/shorts/BJTLAs43nkE'},
+          {kind:'watch', t:'Watch: proper A-skip form', v:'https://www.youtube.com/watch?v=twmQ9cpCI48'},
+          {kind:'do', t:'A-skip drill', setup:'Mark a 15m line. Skip forward driving your knee up high each step.', reps:'2 sets of 15m', v:'https://www.youtube.com/watch?v=twmQ9cpCI48'},
+          {kind:'do', t:'Sprints', setup:'Mark a 20m line with 2 cones. Full sprint each rep, take a full rest before the next one.', reps:'6 reps', v:'https://www.youtube.com/watch?v=2Dt2DbjAKbo'},
+          {kind:'do', t:'Agility ladder', setup:'Lay your ladder flat. Move through it quickly using any pattern you know.', reps:'2 trips through', v:'https://www.youtube.com/watch?v=6NnGQl-TZHs'}
         ]
       },
       {
         title: 'Speed — Level 3: Change of Direction',
         desc: 'Speed in a straight line is good. Speed that changes direction is better. Today we add cuts.',
         tasks: [
-          {t:'Warm up first — 5 min dynamic warm-up (leg swings, high knees, hip circles)', v:'https://www.youtube.com/shorts/BJTLAs43nkE', warmup:true},
-          {t:'Watch the change of direction clip first', v:'https://www.youtube.com/watch?v=f6TRC2zHkJY'},
-          {t:'5 sprints of 20m, cut hard left at the cone, sprint 5 more', v:'https://www.youtube.com/watch?v=f6TRC2zHkJY'},
-          {t:'5 sprints of 20m, cut hard right at the cone, sprint 5 more', v:'https://www.youtube.com/watch?v=f6TRC2zHkJY'}
+          {kind:'warmup', t:'Dynamic warm-up', setup:'5 minutes: leg swings, high knees, hip circles.', v:'https://www.youtube.com/shorts/BJTLAs43nkE'},
+          {kind:'watch', t:'Watch: how to cut hard without losing speed', v:'https://www.youtube.com/watch?v=f6TRC2zHkJY'},
+          {kind:'do', t:'Cut left', setup:'Place a cone 20m away. Sprint to it, plant your outside foot, cut hard left, then sprint 5 more meters.', reps:'5 reps', v:'https://www.youtube.com/watch?v=f6TRC2zHkJY'},
+          {kind:'do', t:'Cut right', setup:'Same setup as before — sprint, plant, cut hard right, sprint 5 more meters.', reps:'5 reps', v:'https://www.youtube.com/watch?v=f6TRC2zHkJY'}
         ]
       },
       {
         title: 'Speed — Level 4: Top Speed',
         desc: 'Time to find your top gear. These sprints are longer — give full effort and take full rest.',
         tasks: [
-          {t:'Warm up first — 5 min dynamic warm-up (leg swings, high knees, hip circles)', v:'https://www.youtube.com/shorts/BJTLAs43nkE', warmup:true},
-          {t:'Watch the top speed sprint clip', v:'https://www.youtube.com/watch?v=BswRzWK5e0o'},
-          {t:'6 sprints of 30m at max effort — rest 60 sec between each', v:'https://www.youtube.com/watch?v=BswRzWK5e0o'},
-          {t:'2 sprints of 40m — push all the way through the line', v:'https://www.youtube.com/watch?v=BswRzWK5e0o'}
+          {kind:'warmup', t:'Dynamic warm-up', setup:'5 minutes: leg swings, high knees, hip circles.', v:'https://www.youtube.com/shorts/BJTLAs43nkE'},
+          {kind:'watch', t:'Watch: top speed sprint mechanics', v:'https://www.youtube.com/watch?v=BswRzWK5e0o'},
+          {kind:'do', t:'Sprints', setup:'Mark a 30m line. Max effort every rep, rest 60 seconds between each one.', reps:'6 reps', v:'https://www.youtube.com/watch?v=BswRzWK5e0o'},
+          {kind:'do', t:'Long sprints', setup:'Mark a 40m line. Push all the way through the finish line — keep your speed up to the end.', reps:'2 reps', v:'https://www.youtube.com/watch?v=BswRzWK5e0o'}
         ]
       },
       {
         title: 'Speed — Level 5: Game Speed',
         desc: 'The hardest speed session. Sprint, recover fast, sprint again — just like a real match.',
         tasks: [
-          {t:'Warm up first — 5 min dynamic warm-up (leg swings, high knees, hip circles)', v:'https://www.youtube.com/shorts/BJTLAs43nkE', warmup:true},
-          {t:'Watch the quickness and agility clip', v:'https://www.youtube.com/shorts/YQ2IGUOrt6Q'},
-          {t:'8 sprints of 20m with only 30 sec rest between each', v:'https://www.youtube.com/watch?v=2Dt2DbjAKbo'},
-          {t:'Finish with 1 max-effort 40m sprint — your fastest of the day', v:'https://www.youtube.com/watch?v=BswRzWK5e0o'}
+          {kind:'warmup', t:'Dynamic warm-up', setup:'5 minutes: leg swings, high knees, hip circles.', v:'https://www.youtube.com/shorts/BJTLAs43nkE'},
+          {kind:'watch', t:'Watch: quickness and agility drills', v:'https://www.youtube.com/shorts/YQ2IGUOrt6Q'},
+          {kind:'do', t:'Quick sprints', setup:'Mark a 20m line. Sprint, then only rest 30 seconds before going again.', reps:'8 reps', v:'https://www.youtube.com/watch?v=2Dt2DbjAKbo'},
+          {kind:'do', t:'Finisher sprint', setup:'Mark a 40m line. One final sprint — make it your fastest of the day.', reps:'1 rep', v:'https://www.youtube.com/watch?v=BswRzWK5e0o'}
         ]
       }
     ]
@@ -197,50 +206,50 @@ const TRACKS = {
         title: 'Power Kicks — Level 1: The Basics',
         desc: 'Every powerful shot starts with the same setup. Learn it slow before we add speed.',
         tasks: [
-          {t:'Warm up first — 5 min dynamic warm-up (leg swings, high knees, hip circles)', v:'https://www.youtube.com/shorts/BJTLAs43nkE', warmup:true},
-          {t:'Watch the short clip on shooting technique', v:'https://www.youtube.com/shorts/W6Kv5jVQ7bo'},
-          {t:'10 shots from a standing ball — plant foot beside the ball, lock your ankle', v:'https://www.youtube.com/watch?v=_f9ZIh8ESn4'},
-          {t:'10 more shots, same technique, both feet', v:'https://www.youtube.com/watch?v=_f9ZIh8ESn4'}
+          {kind:'warmup', t:'Dynamic warm-up', setup:'5 minutes: leg swings, high knees, hip circles.', v:'https://www.youtube.com/shorts/BJTLAs43nkE'},
+          {kind:'watch', t:'Watch: proper shooting technique', v:'https://www.youtube.com/shorts/W6Kv5jVQ7bo'},
+          {kind:'do', t:'Standing shots', setup:'Place the ball still on the ground. Plant your non-kicking foot beside the ball, lock your ankle, strike through the middle.', reps:'10 reps', v:'https://www.youtube.com/watch?v=_f9ZIh8ESn4'},
+          {kind:'do', t:'Both feet', setup:'Same technique as before — same setup, alternate feet each shot.', reps:'10 reps', v:'https://www.youtube.com/watch?v=_f9ZIh8ESn4'}
         ]
       },
       {
         title: 'Power Kicks — Level 2: Adding Power',
         desc: 'Same technique, more power. The power comes from your hips, not your leg muscles.',
         tasks: [
-          {t:'Warm up first — 5 min dynamic warm-up (leg swings, high knees, hip circles)', v:'https://www.youtube.com/shorts/BJTLAs43nkE', warmup:true},
-          {t:'Watch the power technique clip', v:'https://www.youtube.com/watch?v=ipzEbfqAi2Y'},
-          {t:'12 shots — focus on turning your hips through the ball', v:'https://www.youtube.com/watch?v=ipzEbfqAi2Y'},
-          {t:'10 shots with your weak foot — same technique', v:'https://www.youtube.com/watch?v=ipzEbfqAi2Y'}
+          {kind:'warmup', t:'Dynamic warm-up', setup:'5 minutes: leg swings, high knees, hip circles.', v:'https://www.youtube.com/shorts/BJTLAs43nkE'},
+          {kind:'watch', t:'Watch: where shooting power comes from', v:'https://www.youtube.com/watch?v=ipzEbfqAi2Y'},
+          {kind:'do', t:'Power shots', setup:'Ball still on the ground. Same setup as before, but focus on turning your hips through the ball as you strike.', reps:'12 reps', v:'https://www.youtube.com/watch?v=ipzEbfqAi2Y'},
+          {kind:'do', t:'Weak foot shots', setup:'Same setup and technique, weak foot only.', reps:'10 reps', v:'https://www.youtube.com/watch?v=ipzEbfqAi2Y'}
         ]
       },
       {
         title: 'Power Kicks — Level 3: Moving Shots',
-        desc: 'Shooting while standing still is easy. Now let\'s shoot while moving — like in a real game.',
+        desc: 'Shooting while standing still is easy. Now let us shoot while moving — like in a real game.',
         tasks: [
-          {t:'Warm up first — 5 min dynamic warm-up (leg swings, high knees, hip circles)', v:'https://www.youtube.com/shorts/BJTLAs43nkE', warmup:true},
-          {t:'Watch the moving shot technique clip', v:'https://www.youtube.com/watch?v=_f9ZIh8ESn4'},
-          {t:'15 shots — jog up to the ball and strike it on the move', v:'https://www.youtube.com/watch?v=_f9ZIh8ESn4'},
-          {t:'10 shots aiming for the corners — low and hard', v:'https://www.youtube.com/watch?v=1zNDn5ZKuBU'}
+          {kind:'warmup', t:'Dynamic warm-up', setup:'5 minutes: leg swings, high knees, hip circles.', v:'https://www.youtube.com/shorts/BJTLAs43nkE'},
+          {kind:'watch', t:'Watch: how to shoot while moving', v:'https://www.youtube.com/watch?v=_f9ZIh8ESn4'},
+          {kind:'do', t:'Moving shots', setup:'Place the ball 5m away. Jog up to it and strike it on the move without slowing down.', reps:'15 reps', v:'https://www.youtube.com/watch?v=_f9ZIh8ESn4'},
+          {kind:'do', t:'Corner shots', setup:'Pick a low target in each corner of the goal. Aim for it, low and hard, every shot.', reps:'10 reps', v:'https://www.youtube.com/watch?v=1zNDn5ZKuBU'}
         ]
       },
       {
         title: 'Power Kicks — Level 4: Toss & Volley',
         desc: 'Volleys are tricky — you have to time the strike perfectly. Toss the ball up yourself and practice.',
         tasks: [
-          {t:'Warm up first — 5 min dynamic warm-up (leg swings, high knees, hip circles)', v:'https://www.youtube.com/shorts/BJTLAs43nkE', warmup:true},
-          {t:'Watch the volley technique clip', v:'https://www.youtube.com/watch?v=J1dfNXY3yMI'},
-          {t:'10 volleys — toss the ball up, strike it before it bounces', v:'https://www.youtube.com/watch?v=J1dfNXY3yMI'},
-          {t:'15 long-range shots from outside the box — aim low corners', v:'https://www.youtube.com/watch?v=1zNDn5ZKuBU'}
+          {kind:'warmup', t:'Dynamic warm-up', setup:'5 minutes: leg swings, high knees, hip circles.', v:'https://www.youtube.com/shorts/BJTLAs43nkE'},
+          {kind:'watch', t:'Watch: volley timing and technique', v:'https://www.youtube.com/watch?v=J1dfNXY3yMI'},
+          {kind:'do', t:'Toss-and-volley', setup:'Toss the ball up about head height yourself, then strike it cleanly before it bounces.', reps:'10 reps', v:'https://www.youtube.com/watch?v=J1dfNXY3yMI'},
+          {kind:'do', t:'Long shots', setup:'Stand outside the box. Aim low into the corners, full power.', reps:'15 reps', v:'https://www.youtube.com/watch?v=1zNDn5ZKuBU'}
         ]
       },
       {
         title: 'Power Kicks — Level 5: Game Finisher',
         desc: 'The hardest shooting session. Sprint first, then finish — exactly how it feels in a real match.',
         tasks: [
-          {t:'Warm up first — 5 min dynamic warm-up (leg swings, high knees, hip circles)', v:'https://www.youtube.com/shorts/BJTLAs43nkE', warmup:true},
-          {t:'Watch the game-speed finishing clip', v:'https://www.youtube.com/watch?v=qg2SKFk1_D8'},
-          {t:'Sprint 20m, then strike — 10 reps, full effort every time', v:'https://www.youtube.com/watch?v=qg2SKFk1_D8'},
-          {t:'10 finishing reps using only your weak foot', v:'https://www.youtube.com/watch?v=ipzEbfqAi2Y'}
+          {kind:'warmup', t:'Dynamic warm-up', setup:'5 minutes: leg swings, high knees, hip circles.', v:'https://www.youtube.com/shorts/BJTLAs43nkE'},
+          {kind:'watch', t:'Watch: finishing at game speed', v:'https://www.youtube.com/watch?v=qg2SKFk1_D8'},
+          {kind:'do', t:'Sprint & finish', setup:'Place the ball 20m from goal. Sprint to it, then strike on arrival — full effort every time.', reps:'10 reps', v:'https://www.youtube.com/watch?v=qg2SKFk1_D8'},
+          {kind:'do', t:'Weak foot finishing', setup:'Same sprint-and-strike setup, weak foot only.', reps:'10 reps', v:'https://www.youtube.com/watch?v=ipzEbfqAi2Y'}
         ]
       }
     ]
@@ -250,51 +259,52 @@ const TRACKS = {
     levels: [
       {
         title: 'Game IQ — Level 1: Look First',
-        desc: 'The best players check around them before the ball even arrives. Let\'s build that habit.',
+        desc: 'The best players check around them before the ball even arrives. Time to build that habit.',
         tasks: [
-          {t:'Watch the short clip on checking your shoulder', v:'https://www.youtube.com/shorts/WO07VKhU3Wk'},
-          {t:'Pass the ball against a wall 15 times — look behind you before each touch', v:'https://www.youtube.com/watch?v=1oxaF_Mx6Ok'},
-          {t:'Practice receiving at an angle, not facing straight ahead — 10 reps', v:'https://www.youtube.com/watch?v=zk2Sua-rr3Y'}
+          {kind:'watch', t:'Watch: why checking your shoulder matters', v:'https://www.youtube.com/shorts/WO07VKhU3Wk'},
+          {kind:'do', t:'Wall passing with scanning', setup:'Stand a few steps from a wall. Pass the ball against it — before each touch, quickly look behind you.', reps:'15 reps', v:'https://www.youtube.com/watch?v=1oxaF_Mx6Ok'},
+          {kind:'do', t:'Angled receiving', setup:'Toss the ball to yourself or use a wall. Practice receiving it side-on instead of facing it straight on.', reps:'10 reps', v:'https://www.youtube.com/watch?v=zk2Sua-rr3Y'}
         ]
       },
       {
         title: 'Game IQ — Level 2: When to Scan',
         desc: 'There are 3 perfect moments to look around during a game. Today we learn what they are.',
         tasks: [
-          {t:'Watch the "when to scan" clip', v:'https://www.youtube.com/shorts/K8jTWP6Stj4'},
-          {t:'Wall passing — scan once before you receive, once after, 15 reps', v:'https://www.youtube.com/watch?v=1oxaF_Mx6Ok'},
-          {t:'Dribble through 4 cones, head up the whole time', v:'https://www.youtube.com/watch?v=7Ot-JKwKFi4'}
+          {kind:'watch', t:'Watch: the 3 best moments to scan', v:'https://www.youtube.com/shorts/K8jTWP6Stj4'},
+          {kind:'do', t:'Wall passing — double scan', setup:'Same wall passing setup as before. This time scan once before you receive, and once again right after.', reps:'15 reps', v:'https://www.youtube.com/watch?v=1oxaF_Mx6Ok'},
+          {kind:'do', t:'Cone dribble, head up', setup:'Set up 4 cones in a line, 2m apart. Dribble through them keeping your head up the whole time.', reps:'4 trips through', v:'https://www.youtube.com/watch?v=7Ot-JKwKFi4'}
         ]
       },
       {
         title: 'Game IQ — Level 3: Reading a Defender',
-        desc: 'Cones can act like a defender. Learn to read which way to go based on how they\'re facing.',
+        desc: 'Cones can act like a defender. Learn to read which way to go based on how they are facing.',
         tasks: [
-          {t:'Watch the 1v1 dribbling move clip', v:'https://www.youtube.com/shorts/PQ_P_-p9W-k'},
-          {t:'Set up a cone — dribble at it, fake one way, go the other. 10 reps', v:'https://www.youtube.com/watch?v=5mQ4QbKHT_Y'},
-          {t:'Same drill, but finish with a shot every time — 10 reps', v:'https://www.youtube.com/watch?v=5mQ4QbKHT_Y'}
+          {kind:'watch', t:'Watch: a simple 1v1 move to learn', v:'https://www.youtube.com/shorts/PQ_P_-p9W-k'},
+          {kind:'do', t:'Beat the cone', setup:'Place one cone as a defender. Dribble straight at it, fake one direction, then go the other way.', reps:'10 reps', v:'https://www.youtube.com/watch?v=5mQ4QbKHT_Y'},
+          {kind:'do', t:'Beat the cone and shoot', setup:'Same setup as before. This time, finish with a shot on goal every time.', reps:'10 reps', v:'https://www.youtube.com/watch?v=5mQ4QbKHT_Y'}
         ]
       },
       {
         title: 'Game IQ — Level 4: Finding Space',
-        desc: 'Great strikers don\'t stand still. Learn to find pockets of space and attack them.',
+        desc: 'Great strikers do not stand still. Learn to find pockets of space and attack them.',
         tasks: [
-          {t:'Watch the finding space clip', v:'https://www.youtube.com/watch?v=8OdviDQn5g8'},
-          {t:'Sprint to a cone, check back to an imaginary teammate, then sprint to space — 8 reps', v:'https://www.youtube.com/watch?v=MO6Nk8t3keY'},
-          {t:'Practice timing a run — wait, then explode into the open space, 8 reps', v:'https://www.youtube.com/watch?v=MO6Nk8t3keY'}
+          {kind:'watch', t:'Watch: how strikers find space', v:'https://www.youtube.com/watch?v=8OdviDQn5g8'},
+          {kind:'do', t:'Check and sprint', setup:'Place a cone 15m away as your "teammate." Sprint to it, check back as if receiving a pass, then sprint into open space.', reps:'8 reps', v:'https://www.youtube.com/watch?v=MO6Nk8t3keY'},
+          {kind:'do', t:'Timed run', setup:'Pick a spot of open space 15-20m away. Wait, then explode into a sprint toward it on your own timing.', reps:'8 reps', v:'https://www.youtube.com/watch?v=MO6Nk8t3keY'}
         ]
       },
       {
         title: 'Game IQ — Level 5: Full Decision Making',
         desc: 'The hardest IQ session — combine scanning, reading defenders, and finding space into one flow.',
         tasks: [
-          {t:'Watch the full striker movement breakdown', v:'https://www.youtube.com/watch?v=MO6Nk8t3keY'},
-          {t:'Cone course: dribble, scan, beat a cone, find space, finish — 5 full reps', v:'https://www.youtube.com/watch?v=qg2SKFk1_D8'},
-          {t:'Pick your best rep today and think about what made it work', v:'https://www.youtube.com/watch?v=XCaOePc3lCQ'}
+          {kind:'watch', t:'Watch: full striker movement breakdown', v:'https://www.youtube.com/watch?v=MO6Nk8t3keY'},
+          {kind:'do', t:'Full cone course', setup:'Set up 3 cones in a path to goal. Dribble in, scan, beat the first cone, find space, then finish.', reps:'5 full reps', v:'https://www.youtube.com/watch?v=qg2SKFk1_D8'},
+          {kind:'do', t:'Reflect', setup:'Think back over the course reps you just did.', reps:'Pick your best one and think about what made it work', v:'https://www.youtube.com/watch?v=XCaOePc3lCQ'}
         ]
       }
     ]
   }
+
 };
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
@@ -385,13 +395,29 @@ function renderSession() {
   level.tasks.forEach((task, ti) => {
     const k = taskKey(activeTrack, activeLevel, ti);
     const done = !!state.tasksDone[k];
-    const isWarmup = !!task.warmup;
-    tasksHtml += `<div class="task-card ${done?'done':''} ${isWarmup?'warmup':''}" id="tc_${ti}">
+    const kind = task.kind || 'do';
+    const badgeMap = {warmup:'Warm-up', watch:'Watch first', do:'Do this'};
+    const badgeClassMap = {warmup:'warmup', watch:'watchbadge', do:'dobadge'};
+    const badge = badgeMap[kind];
+    const badgeClass = badgeClassMap[kind];
+
+    let bodyHtml = `<div class="task-text-main">${task.t}</div>`;
+    if (task.setup) {
+      bodyHtml += `<div class="task-setup">${task.setup}</div>`;
+    }
+    if (task.reps) {
+      bodyHtml += `<div class="task-reps">${task.reps}</div>`;
+    }
+
+    tasksHtml += `<div class="task-card ${done?'done':''} ${kind==='warmup'?'warmup':''}" id="tc_${ti}">
       <div class="task-top" onclick="toggleTask(${ti})">
         <div class="task-cb">${done?'✓':''}</div>
         <div class="task-num">${ti+1}</div>
-        <div class="task-text">${isWarmup ? '<span class="warmup-badge">Warm-up</span>' : ''}${task.t}</div>
-        ${task.v ? `<a class="task-watch" href="${task.v}" target="_blank" rel="noopener" onclick="event.stopPropagation()">▶ watch</a>` : ''}
+        <div class="task-body">
+          <span class="task-badge ${badgeClass}">${badge}</span>
+          ${bodyHtml}
+        </div>
+        ${task.v ? `<a class="task-watch" href="${task.v}" target="_blank" rel="noopener" onclick="event.stopPropagation()">▶ ${kind==='watch'||kind==='warmup'?'watch':'clip'}</a>` : ''}
       </div>
     </div>`;
   });
