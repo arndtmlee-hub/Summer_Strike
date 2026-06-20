@@ -3,931 +3,459 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Summer Strike — 12-Week Soccer Program</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Summer Strike — Solo Training</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
-:root{--lime:#b8f536;--lime-dim:#7aab1f;--white:#f0eeea;--off:#c8c6bc;--muted:#6a6860;--card:#111;--border:rgba(255,255,255,0.08);--speed:#f59e0b;--kick:#e84c3d;--iq:#38bdf8;}
+:root{
+  --lime:#b8f536;--lime-dim:#7aab1f;--white:#f0eeea;--off:#c8c6bc;--muted:#6a6860;
+  --card:#111;--border:rgba(255,255,255,.08);
+  --speed:#f59e0b;--kick:#e84c3d;--iq:#38bdf8;
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:#000;color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.6;min-height:100vh}
-.app{max-width:1000px;margin:0 auto;padding:0 16px 80px}
-.header{padding:32px 0 20px;display:flex;align-items:flex-end;justify-content:space-between;border-bottom:1px solid var(--border);margin-bottom:24px}
-.logo-main{font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:2px;color:var(--lime);line-height:1}
-.logo-sub{font-size:11px;letter-spacing:4px;color:var(--muted);text-transform:uppercase}
-.hm{text-align:right;font-size:12px;color:var(--muted)}
-.hm b{display:block;font-family:'DM Mono',monospace;font-size:10px;color:var(--lime-dim);letter-spacing:2px;text-transform:uppercase}
-.prog-wrap{margin-bottom:24px}
-.prog-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px}
-.prog-label span{font-family:'DM Mono',monospace;color:var(--lime)}
-.prog-track{height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
-.prog-bar{height:100%;background:var(--lime);border-radius:2px;transition:width .4s}
+body{background:#000;color:var(--white);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.6;min-height:100vh}
+.app{max-width:720px;margin:0 auto;padding:0 16px 60px}
 
-/* SETUP */
-.setup-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:16px}
-.setup-title{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--lime);letter-spacing:1px;margin-bottom:4px}
-.setup-sub{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6}
-.legend{display:flex;gap:20px;margin-bottom:16px;flex-wrap:wrap}
-.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
-.ldot{width:10px;height:10px;border-radius:50%}
-.day-picker{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:16px}
-.dp{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 4px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);cursor:pointer;transition:all .2s;user-select:none}
-.dp:hover{border-color:rgba(255,255,255,.2)}
-.dp-name{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
-.dp-badge{width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--muted);transition:all .2s}
-.dp.intense{border-color:rgba(184,245,54,.3);background:rgba(184,245,54,.05)}
-.dp.intense .dp-name{color:var(--lime)}
-.dp.intense .dp-badge{background:var(--lime);border-color:var(--lime);color:#111}
-.dp.light{border-color:rgba(56,189,248,.2);background:rgba(56,189,248,.04)}
-.dp.light .dp-name{color:var(--iq)}
-.dp.light .dp-badge{background:rgba(56,189,248,.2);border-color:rgba(56,189,248,.4);color:var(--iq)}
-.dp.rest{border-color:rgba(106,104,96,.2);background:rgba(106,104,96,.04)}
-.dp.rest .dp-badge{background:rgba(106,104,96,.2);border-color:rgba(106,104,96,.3)}
-.counts{display:flex;gap:20px;margin-bottom:12px;font-size:13px}
-.counts span{font-family:'DM Mono',monospace;font-size:15px;font-weight:600}
-.c-i{color:var(--lime)}.c-l{color:var(--iq)}.c-r{color:var(--muted)}
-.warn{font-size:12px;color:var(--kick);min-height:18px;margin-bottom:12px}
-.warn.ok{color:var(--lime-dim)}
-.btn{padding:10px 24px;border-radius:6px;border:none;background:var(--lime);color:#0d1a0d;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer}
-.btn:disabled{opacity:.3;cursor:not-allowed}
-.btn:not(:disabled):hover{background:#cffb50}
+.header{padding:28px 0 18px;text-align:center;border-bottom:1px solid var(--border);margin-bottom:24px}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:44px;letter-spacing:2px;color:var(--lime);line-height:1}
+.logo-sub{font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-top:2px}
 
-/* MAIN */
-#main{display:none}
-.edit-btn{font-size:11px;color:var(--muted);background:none;border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-bottom:18px;transition:all .15s}
-.edit-btn:hover{color:var(--lime);border-color:rgba(184,245,54,.3)}
-.phase-tabs{display:flex;gap:8px;margin-bottom:22px;overflow-x:auto;padding-bottom:4px}
-.phase-tabs::-webkit-scrollbar{height:2px}
-.ptab{flex-shrink:0;padding:9px 18px;border-radius:6px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap;font-family:'DM Sans',sans-serif}
-.ptab:hover{color:var(--off);border-color:rgba(255,255,255,.15)}
-.ptab.active{background:var(--lime);color:#0d1a0d;border-color:var(--lime);font-weight:600}
-.ptab small{display:block;font-size:10px;opacity:.6;margin-top:1px;font-weight:400}
-@keyframes fi{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-.phase-hdr{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:18px 22px;margin-bottom:18px;display:flex;gap:18px;align-items:flex-start}
-.phase-num{font-family:'Bebas Neue',sans-serif;font-size:64px;line-height:1;color:rgba(255,255,255,.05);flex-shrink:0;letter-spacing:2px}
-.phase-ttl{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--lime);letter-spacing:1px;margin-bottom:3px}
-.phase-desc{font-size:12px;color:var(--muted);line-height:1.6}
-.pills{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
-.pill{padding:2px 9px;border-radius:3px;font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
-.pill.speed{background:rgba(245,158,11,.15);color:var(--speed);border:1px solid rgba(245,158,11,.25)}
-.pill.kick{background:rgba(232,76,61,.15);color:var(--kick);border:1px solid rgba(232,76,61,.25)}
-.pill.iq{background:rgba(56,189,248,.15);color:var(--iq);border:1px solid rgba(56,189,248,.25)}
-.pill.rest{background:rgba(106,104,96,.15);color:var(--muted);border:1px solid rgba(106,104,96,.25)}
-.week-nav{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
-.wbtn{padding:5px 13px;border-radius:3px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:11px;font-family:'DM Mono',monospace;cursor:pointer;transition:all .15s}
-.wbtn:hover{border-color:rgba(184,245,54,.3);color:var(--off)}
-.wbtn.active{background:rgba(184,245,54,.12);border-color:var(--lime-dim);color:var(--lime)}
-.wbtn.done::after{content:'✓';margin-left:4px;color:var(--lime);font-size:9px}
+/* TRACK PROGRESS BARS */
+.tracks{display:flex;gap:10px;margin-bottom:28px}
+.track{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
+.track-icon{font-size:22px;margin-bottom:4px}
+.track-name{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.track-name.speed{color:var(--speed)}
+.track-name.kick{color:var(--kick)}
+.track-name.iq{color:var(--iq)}
+.track-bar-track{height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;margin-bottom:6px}
+.track-bar-fill{height:100%;border-radius:3px;transition:width .4s}
+.track-bar-fill.speed{background:var(--speed)}
+.track-bar-fill.kick{background:var(--kick)}
+.track-bar-fill.iq{background:var(--iq)}
+.track-level{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace}
 
-/* 7-col grid */
-.wgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:18px}
-.wcol{}
-.wcolhdr{padding:5px 3px;text-align:center;border-radius:5px 5px 0 0;border:1px solid transparent;border-bottom:none}
-.wcolhdr.intense{background:rgba(184,245,54,.08);border-color:rgba(184,245,54,.18);color:var(--lime)}
-.wcolhdr.light{background:rgba(56,189,248,.06);border-color:rgba(56,189,248,.15);color:var(--iq)}
-.wcolhdr.rest{background:rgba(106,104,96,.06);border-color:rgba(106,104,96,.15);color:var(--muted)}
-.wcolhdr-name{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
-.wcolhdr-type{font-size:8px;text-transform:uppercase;letter-spacing:.5px;opacity:.7}
-.dcard{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:0 0 7px 7px;overflow:hidden;transition:border-color .2s}
-.dcard.intense{border-color:rgba(184,245,54,.12)}
-.dcard.light{border-color:rgba(56,189,248,.1)}
-.dcard.rest{border-color:rgba(106,104,96,.12);opacity:.6}
-.dcard.all-done{border-color:rgba(184,245,54,.4)!important}
-.dhdr{display:flex;align-items:flex-start;padding:8px 10px;cursor:pointer;gap:6px;border-bottom:1px solid transparent;transition:border-color .2s}
-.dcard.open .dhdr{border-bottom-color:rgba(255,255,255,.05)}
-.dtitle{font-size:11px;font-weight:600;flex:1;line-height:1.35}
-.dctr{font-size:9px;color:var(--muted);font-family:'DM Mono',monospace;white-space:nowrap;flex-shrink:0}
-.dchk{width:18px;height:18px;border-radius:50%;border:1.5px solid rgba(255,255,255,.15);background:transparent;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;color:transparent;transition:all .2s}
-.dchk.done{background:var(--lime);border-color:var(--lime);color:#111}
-.dchev{font-size:9px;color:var(--muted);transition:transform .2s;flex-shrink:0;margin-top:2px}
-.dcard.open .dchev{transform:rotate(180deg)}
-.dbody{display:none;padding:10px}
-.dcard.open .dbody{display:block;animation:fi .15s ease}
-.dtype-lbl{display:inline-block;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 6px;border-radius:3px;margin-bottom:6px}
-.dtype-lbl.intense{background:rgba(184,245,54,.1);color:var(--lime)}
-.dtype-lbl.light{background:rgba(56,189,248,.1);color:var(--iq)}
-.dtype-lbl.rest{background:rgba(106,104,96,.1);color:var(--muted)}
-.ddesc{font-size:11px;color:var(--off);line-height:1.6;margin-bottom:8px}
+/* SECTION HEADER */
+.sec-title{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;font-weight:600}
 
-/* CHECKLIST */
-.cl{list-style:none;margin-bottom:10px}
-.cl li{display:flex;align-items:flex-start;gap:6px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.03)}
-.cl li:last-child{border-bottom:none}
-.cl-l{display:flex;align-items:flex-start;gap:6px;flex:1;cursor:pointer}
-.cl-l:hover .cl-txt{color:var(--white)}
-.cl li.ck .cl-txt{color:var(--muted);text-decoration:line-through}
-.cb{width:13px;height:13px;border-radius:2px;border:1.5px solid rgba(255,255,255,.2);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s}
-.cl li.ck .cb{background:var(--lime);border-color:var(--lime)}
-.cl li.ck .cb::after{content:'✓';font-size:8px;color:#111;font-weight:700}
-.cl-txt{font-size:11px;color:var(--off);line-height:1.5}
-.cl-tip{flex-shrink:0;display:inline-flex;align-items:center;gap:3px;font-size:9px;color:var(--muted);text-decoration:none;padding:1px 5px;border-radius:3px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);white-space:nowrap;transition:all .15s}
-.cl-tip:hover{color:var(--lime);border-color:rgba(184,245,54,.3)}
+/* SESSION CARDS - CHOICE SCREEN */
+.choices{display:flex;flex-direction:column;gap:12px;margin-bottom:28px}
+.choice-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:16px}
+.choice-card:hover{border-color:rgba(255,255,255,.2);transform:translateY(-1px)}
+.choice-card.speed{border-left:3px solid var(--speed)}
+.choice-card.kick{border-left:3px solid var(--kick)}
+.choice-card.iq{border-left:3px solid var(--iq)}
+.choice-card.locked{opacity:.4;cursor:not-allowed}
+.choice-card.locked:hover{transform:none;border-color:var(--border)}
+.choice-icon{font-size:28px;flex-shrink:0;width:44px;text-align:center}
+.choice-info{flex:1}
+.choice-track-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;margin-bottom:2px}
+.choice-track-label.speed{color:var(--speed)}
+.choice-track-label.kick{color:var(--kick)}
+.choice-track-label.iq{color:var(--iq)}
+.choice-title{font-size:16px;font-weight:600;margin-bottom:3px}
+.choice-desc{font-size:12px;color:var(--muted);line-height:1.5}
+.choice-level{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:4px}
+.choice-arrow{font-size:18px;color:var(--muted);flex-shrink:0}
+.lock-icon{font-size:18px;flex-shrink:0}
 
-/* VIDEOS */
-.vsec{margin-top:10px}
-.vsec-title{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:flex;align-items:center;gap:4px}
-.vsec-title::before{content:'▶';color:var(--kick);font-size:7px}
-.vlinks{display:flex;flex-direction:column;gap:4px}
-.vlink{display:flex;align-items:center;gap:7px;padding:6px 8px;border-radius:5px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);text-decoration:none;color:var(--off);transition:all .15s}
-.vlink:hover{background:rgba(184,245,54,.05);border-color:rgba(184,245,54,.15);color:var(--white)}
-.vthumb{width:28px;height:20px;border-radius:2px;flex-shrink:0;background:rgba(232,76,61,.2);border:1px solid rgba(232,76,61,.3);display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--kick)}
-.vinfo{flex:1}
-.vtitle{font-size:10px;font-weight:500;line-height:1.3}
-.vchan{font-size:9px;color:var(--muted)}
-.varr{font-size:10px;color:var(--muted)}
+/* SESSION DETAIL VIEW */
+#sessionView{display:none}
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);background:none;border:none;cursor:pointer;margin-bottom:18px;font-family:'DM Sans',sans-serif;padding:0}
+.back-btn:hover{color:var(--off)}
+.session-hero{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:20px}
+.session-hero.speed{border-top:3px solid var(--speed)}
+.session-hero.kick{border-top:3px solid var(--kick)}
+.session-hero.iq{border-top:3px solid var(--iq)}
+.session-hero-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+.session-hero-label.speed{color:var(--speed)}
+.session-hero-label.kick{color:var(--kick)}
+.session-hero-label.iq{color:var(--iq)}
+.session-hero-title{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:1px;color:var(--white);margin-bottom:8px}
+.session-hero-desc{font-size:13px;color:var(--off);line-height:1.7}
 
-/* IQ */
-.iq-card{background:rgba(56,189,248,.05);border:1px solid rgba(56,189,248,.15);border-radius:5px;padding:8px 10px;margin-top:8px}
-.iq-lbl{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--iq);margin-bottom:3px}
-.iq-card h4{font-size:12px;font-weight:600;margin-bottom:3px}
-.iq-card p{font-size:10px;color:var(--muted);line-height:1.6}
+.task-list{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.task-card{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.task-card.done{border-color:rgba(184,245,54,.35)}
+.task-top{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer}
+.task-cb{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;transition:all .2s}
+.task-card.done .task-cb{background:var(--lime);border-color:var(--lime);color:#111}
+.task-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);flex-shrink:0;width:14px}
+.task-text{flex:1;font-size:14px;font-weight:500}
+.task-card.done .task-text{color:var(--muted);text-decoration:line-through}
+.task-watch{flex-shrink:0;font-size:11px;color:var(--muted);text-decoration:none;padding:5px 10px;border-radius:5px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);white-space:nowrap;transition:all .15s}
+.task-watch:hover{color:var(--lime);border-color:rgba(184,245,54,.3)}
+.task-card.warmup{border-style:dashed;background:rgba(255,255,255,.015)}
+.task-card.warmup .task-num{color:var(--lime-dim)}
+.warmup-badge{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--lime-dim);font-weight:700;margin-right:4px}
 
-/* COACH NOTE */
-.cnote{margin-top:20px;padding:14px 18px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:8px}
-.cnote-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--lime-dim);margin-bottom:5px}
-.cnote p{font-size:11px;color:var(--muted);line-height:1.7}
-.cnote-vids{margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.05)}
-.cnote-vids-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--lime-dim);margin-bottom:8px}
+.complete-btn{width:100%;padding:14px;border-radius:10px;border:none;background:var(--lime);color:#0d1a0d;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .15s}
+.complete-btn:hover{background:#cffb50}
+.complete-btn:disabled{opacity:.3;cursor:not-allowed}
 
-@media(max-width:700px){.wgrid{grid-template-columns:repeat(4,1fr)}.day-picker{grid-template-columns:repeat(4,1fr)}.logo-main{font-size:36px}}
-@media(max-width:480px){.wgrid{grid-template-columns:repeat(2,1fr)}}
+/* UNLOCK TOAST */
+.unlock-toast{display:none;background:rgba(184,245,54,.08);border:1px solid rgba(184,245,54,.3);border-radius:10px;padding:16px 18px;margin-top:14px;text-align:center}
+.unlock-toast.show{display:block;animation:pop .3s ease}
+@keyframes pop{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.unlock-toast-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--lime-dim);margin-bottom:4px}
+.unlock-toast-title{font-size:15px;font-weight:600}
+
+.intro-note{font-size:12px;color:var(--muted);text-align:center;margin-bottom:24px;line-height:1.7;padding:0 10px}
+
+@media(max-width:480px){
+  .tracks{flex-direction:column}
+  .logo{font-size:36px}
+  .session-hero-title{font-size:26px}
+}
 </style>
 </head>
 <body>
 <div class="app">
   <div class="header">
-    <div><div class="logo-main">Summer Strike</div><div class="logo-sub">12-Week Striker Development Program</div></div>
-    <div class="hm"><b>Forward / Striker · U14–U16</b>Competitive · Personalized Schedule</div>
-  </div>
-  <div class="prog-wrap">
-    <div class="prog-label">Overall progress <span id="pct">0%</span></div>
-    <div class="prog-track"><div class="prog-bar" id="pbar" style="width:0%"></div></div>
+    <div class="logo">Summer Strike</div>
+    <div class="logo-sub">Solo Striker Training</div>
   </div>
 
-  <!-- SETUP -->
-  <div id="setup">
-    <div class="setup-card">
-      <div class="setup-title">Set Your Weekly Schedule</div>
-      <div class="setup-sub">Click each day to assign it. Pick exactly 3 intense training days, 3 light days (IQ, recovery, film), and 1 full rest day. Build around your games and practices.</div>
-      <div class="legend">
-        <div class="legend-item"><div class="ldot" style="background:var(--lime)"></div>Intense — speed, power, shooting</div>
-        <div class="legend-item"><div class="ldot" style="background:var(--iq)"></div>Light — IQ, recovery, film</div>
-        <div class="legend-item"><div class="ldot" style="background:var(--muted)"></div>Rest — full recovery</div>
-      </div>
-      <div class="day-picker" id="picker"></div>
-      <div class="counts">
-        Intense: <span class="c-i" id="ci">0</span>/3 &nbsp;
-        Light: <span class="c-l" id="cl">0</span>/3 &nbsp;
-        Rest: <span class="c-r" id="cr">0</span>/1
-      </div>
-      <div class="warn" id="warn">Select 3 intense days to begin.</div>
-      <button class="btn" id="startBtn" disabled onclick="startApp()">Build My Program →</button>
-    </div>
+  <p class="intro-note">Pick any session below. Speed, Power, or IQ — train whatever you want, whenever you want. Finish a session and the next, harder one in that track unlocks.</p>
+
+  <div class="tracks" id="tracks"></div>
+
+  <div id="chooseView">
+    <div class="sec-title">Choose your next session</div>
+    <div class="choices" id="choices"></div>
   </div>
 
-  <!-- MAIN APP -->
-  <div id="main">
-    <button class="edit-btn" onclick="goSetup()">⟳ Edit schedule</button>
-    <div class="phase-tabs" id="tabs"></div>
-    <div id="content"></div>
+  <div id="sessionView">
+    <button class="back-btn" onclick="goBack()">← Back to sessions</button>
+    <div id="sessionContent"></div>
   </div>
 </div>
 
 <script>
-// ─── CONFIG ──────────────────────────────────────────────────────────────────
-const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-const SK = 'ss_v5';
+const SK = 'ss_solo_v1';
 
-let sched = {};   // {Mon:'intense', Tue:'light', ...}
-let prog  = {};   // checklist state
-let curPhase = 0;
-let curWeek  = [0,0,0,0];
-
-try {
-  var saved = JSON.parse(localStorage.getItem(SK)||'{}');
-  sched = saved.sched || {};
-  prog  = saved.prog  || {};
-} catch(e){}
-
-function save() {
-  try { localStorage.setItem(SK, JSON.stringify({sched,prog})); } catch(e){}
-}
-
-// ─── TRAINING DATA ───────────────────────────────────────────────────────────
-var phases = [
-  {
-    num:'01', title:'Foundation', subtitle:'Movement & Mechanics',
-    weeks:'Weeks 1–3', weekRange:[1,2,3],
-    desc:'Build the base: proper running form, striking technique, and core soccer IQ. Low volume, high quality — the body adapts to training stress this phase. Do not rush it.',
-    pills:['speed:Sprint mechanics','kick:Striking basics','iq:Body shape','rest:Recovery'],
-    intense:[
+// ─── DATA: each track has progressive levels. Completing level N unlocks level N+1. ───
+const TRACKS = {
+  speed: {
+    name: 'Speed', icon: '⚡', color: 'speed',
+    levels: [
       {
-        title:'Speed Mechanics', dur:'45 min',
-        desc:'Sprint mechanics are the foundation of everything a striker does. Focus on movement quality over distance — every rep should feel clean.',
-        items:[
-          {t:'Dynamic warm-up: leg swings, hip circles, high knees (10 min)',v:'https://www.youtube.com/watch?v=RMDac1-Q0_A'},
-          {t:'A-skips: 3×20m — drive knee up, arm swings opposite',v:'https://www.youtube.com/watch?v=twmQ9cpCI48'},
-          {t:'B-skips: 3×20m — extend knee forward at top of skip',v:'https://www.youtube.com/watch?v=twmQ9cpCI48'},
-          {t:'Falling starts: 6 reps — lean until gravity forces first step',v:'https://www.youtube.com/watch?v=_u5pyVYjmgk'},
-          {t:'6×20m acceleration sprints — full 90 sec rest between each',v:'https://www.youtube.com/watch?v=2Dt2DbjAKbo'},
-          {t:'Agility ladder: 2-in 2-out pattern, 2 reps each side',v:'https://www.youtube.com/watch?v=6NnGQl-TZHs'},
-          {t:'Cool-down: static quad, hip flexor, calf stretch (5 min)',v:'https://www.youtube.com/watch?v=9bz2jH64HQg'}
-        ],
-        vids:[
-          {t:'Quick Team Warm-Up — Dynamic Drills for Soccer',c:'Joner Football',u:'https://www.youtube.com/watch?v=RMDac1-Q0_A'},
-          {t:'Running & Sprinting Technique — A Skip, B Skip, C Skip',c:'Sprint Mechanics',u:'https://www.youtube.com/watch?v=twmQ9cpCI48'},
-          {t:'Top 10 Speed Drills — Falling Starts & Acceleration',c:'Overtime Athletes',u:'https://www.youtube.com/watch?v=NZo9y0ON7FU'}
-        ],
-        iq:null
+        title: 'Speed — Level 1: First Steps',
+        desc: 'Learn the basic sprint position and how to push off the ground hard. Just 3 simple things today.',
+        tasks: [
+          {t:'Warm up first — 5 min dynamic warm-up (leg swings, high knees, hip circles)', v:'https://www.youtube.com/shorts/BJTLAs43nkE', warmup:true},
+          {t:'Watch the short clip on sprint starts', v:'https://www.youtube.com/shorts/YQ2IGUOrt6Q'},
+          {t:'5 falling starts — lean forward until you have to run', v:'https://www.youtube.com/watch?v=_u5pyVYjmgk'},
+          {t:'5 sprints of 15m — go as fast as you can, walk back to rest', v:'https://www.youtube.com/watch?v=2Dt2DbjAKbo'}
+        ]
       },
       {
-        title:'Striking Technique', dur:'45 min',
-        desc:'The instep drive is the foundation of every powerful shot. Build repeatability first — same plant foot, same hip rotation, same follow-through every time.',
-        items:[
-          {t:'Warm-up: light jog + ball juggling (8 min)',v:'https://www.youtube.com/watch?v=qFVREk1qEKQ'},
-          {t:'Stationary ball: 15 instep drives — locked ankle, toes down',v:'https://www.youtube.com/watch?v=_f9ZIh8ESn4'},
-          {t:'Rolling ball: 20 strikes — plant foot beside ball',v:'https://www.youtube.com/watch?v=_f9ZIh8ESn4'},
-          {t:'Moving finish: 20 strikes approaching at jog pace',v:'https://www.youtube.com/watch?v=_f9ZIh8ESn4'},
-          {t:'Hip rotation: 10 reps — torso rotates fully through the ball',v:'https://www.youtube.com/watch?v=ipzEbfqAi2Y'},
-          {t:'Weak foot: 10 strikes — same technique cues',v:'https://www.youtube.com/watch?v=ipzEbfqAi2Y'},
-          {t:'Cool-down: hip flexor and quad stretch',v:'https://www.youtube.com/watch?v=9bz2jH64HQg'}
-        ],
-        vids:[
-          {t:"Beginner's Guide to Shooting — 5 Basic Tips",c:'Unisport',u:'https://www.youtube.com/watch?v=_f9ZIh8ESn4'},
-          {t:'Learn to Shoot with POWER in Under 3 Minutes',c:'Unisport',u:'https://www.youtube.com/watch?v=ipzEbfqAi2Y'}
-        ],
-        iq:null
+        title: 'Speed — Level 2: Building Speed',
+        desc: 'Now we add more sprints and a longer distance. Push a little harder than last time.',
+        tasks: [
+          {t:'Warm up first — 5 min dynamic warm-up (leg swings, high knees, hip circles)', v:'https://www.youtube.com/shorts/BJTLAs43nkE', warmup:true},
+          {t:'A-skip drill — 2 sets of 15m, focus on knee drive', v:'https://www.youtube.com/watch?v=twmQ9cpCI48'},
+          {t:'6 sprints of 20m — full rest between each one', v:'https://www.youtube.com/watch?v=2Dt2DbjAKbo'},
+          {t:'Agility ladder — 2 trips through, any pattern', v:'https://www.youtube.com/watch?v=6NnGQl-TZHs'}
+        ]
       },
       {
-        title:'Combination Session', dur:'55 min',
-        desc:'Combine everything from the week — sprint into space, receive, decide: pass or shoot? Closest thing to match intensity this week.',
-        items:[
-          {t:'Dynamic warm-up + ball work (10 min)',v:'https://www.youtube.com/watch?v=RMDac1-Q0_A'},
-          {t:'Sprint → receive → finish: 10 reps each side',v:'https://www.youtube.com/watch?v=JipbtZuzWVg'},
-          {t:'1v1 solo simulation: place a cone as a defender, dribble at it, beat it, shoot — 15 min continuous',v:'https://www.youtube.com/watch?v=qg2SKFk1_D8'},
-          {t:'Lay-off vs shoot decision: 5 reps of each read',v:'https://www.youtube.com/watch?v=85TQmVRBFpE'},
-          {t:'Cool-down: full static stretch routine (8 min)',v:'https://www.youtube.com/watch?v=9bz2jH64HQg'},
-          {t:'Mental note: write down one good decision you made today',v:'https://www.youtube.com/watch?v=XCaOePc3lCQ'}
-        ],
-        vids:[{t:'Solo Finishing Session — Individual Shooting Training',c:'Best Soccer Tricks',u:'https://www.youtube.com/watch?v=JipbtZuzWVg'}],
-        iq:{title:'Pass or go',text:'Go 1v1 only when you have the defender isolated with space behind. If a teammate is better placed, pass. The right call made quickly beats the perfect call made slowly.'}
+        title: 'Speed — Level 3: Change of Direction',
+        desc: 'Speed in a straight line is good. Speed that changes direction is better. Today we add cuts.',
+        tasks: [
+          {t:'Warm up first — 5 min dynamic warm-up (leg swings, high knees, hip circles)', v:'https://www.youtube.com/shorts/BJTLAs43nkE', warmup:true},
+          {t:'Watch the change of direction clip first', v:'https://www.youtube.com/watch?v=f6TRC2zHkJY'},
+          {t:'5 sprints of 20m, cut hard left at the cone, sprint 5 more', v:'https://www.youtube.com/watch?v=f6TRC2zHkJY'},
+          {t:'5 sprints of 20m, cut hard right at the cone, sprint 5 more', v:'https://www.youtube.com/watch?v=f6TRC2zHkJY'}
+        ]
+      },
+      {
+        title: 'Speed — Level 4: Top Speed',
+        desc: 'Time to find your top gear. These sprints are longer — give full effort and take full rest.',
+        tasks: [
+          {t:'Warm up first — 5 min dynamic warm-up (leg swings, high knees, hip circles)', v:'https://www.youtube.com/shorts/BJTLAs43nkE', warmup:true},
+          {t:'Watch the top speed sprint clip', v:'https://www.youtube.com/watch?v=BswRzWK5e0o'},
+          {t:'6 sprints of 30m at max effort — rest 60 sec between each', v:'https://www.youtube.com/watch?v=BswRzWK5e0o'},
+          {t:'2 sprints of 40m — push all the way through the line', v:'https://www.youtube.com/watch?v=BswRzWK5e0o'}
+        ]
+      },
+      {
+        title: 'Speed — Level 5: Game Speed',
+        desc: 'The hardest speed session. Sprint, recover fast, sprint again — just like a real match.',
+        tasks: [
+          {t:'Warm up first — 5 min dynamic warm-up (leg swings, high knees, hip circles)', v:'https://www.youtube.com/shorts/BJTLAs43nkE', warmup:true},
+          {t:'Watch the quickness and agility clip', v:'https://www.youtube.com/shorts/YQ2IGUOrt6Q'},
+          {t:'8 sprints of 20m with only 30 sec rest between each', v:'https://www.youtube.com/watch?v=2Dt2DbjAKbo'},
+          {t:'Finish with 1 max-effort 40m sprint — your fastest of the day', v:'https://www.youtube.com/watch?v=BswRzWK5e0o'}
+        ]
       }
-    ],
-    light:[
-      {
-        title:'Soccer IQ — Body Shape', dur:'40 min',
-        desc:'Build the scanning habit and open body shape awareness that separates good forwards from great ones. All drills solo — use a wall, cones, or a rebounder.',
-        items:[
-          {t:'Wall passing warm-up: pass against a wall continuously for 10 min — vary distance and pace',v:'https://www.youtube.com/watch?v=1oxaF_Mx6Ok'},
-          {t:'Scanning drill: name cone colour behind you before touching ball',v:'https://www.youtube.com/watch?v=ibB0Ip1Xgrg'},
-          {t:'Open body shape: receive at 45° so field ahead is visible',v:'https://www.youtube.com/watch?v=zk2Sua-rr3Y'},
-          {t:'Wall passing combinations: one-two into space (20 min)',v:'https://www.youtube.com/watch?v=1oxaF_Mx6Ok'},
-          {t:'Review: what did you see before you received the ball today?',v:'https://www.youtube.com/watch?v=8v311oswCd8'}
-        ],
-        vids:[
-          {t:'Improve Your Scanning & Awareness From Home',c:'Soccer Training',u:'https://www.youtube.com/watch?v=ibB0Ip1Xgrg'},
-          {t:'1000 Touch Wall Passing Session for Footballers',c:'Coach Javi',u:'https://www.youtube.com/watch?v=1oxaF_Mx6Ok'}
-        ],
-        iq:{title:'Open body shape',text:'Always receive the ball at an angle so you can see the whole field. A striker who scans before the ball arrives makes better decisions in half the time.'}
-      },
-      {
-        title:'Active Recovery + Core', dur:'30 min',
-        desc:'Light movement and core work only. Keeps the body active without adding fatigue — especially important around game days.',
-        items:[
-          {t:'Easy jog or walk: 15 min at conversational pace',v:'https://www.youtube.com/watch?v=d6jg-hoDDlM'},
-          {t:'Plank: 3×40 sec — straight body, no sagging hips',v:'https://www.youtube.com/watch?v=pSHjTRCQxIw'},
-          {t:'Glute bridge: 3×12 reps — squeeze hard at the top',v:'https://www.youtube.com/watch?v=wPM8icPu6H8'},
-          {t:'Foam roll: quads, IT band, calves (60 sec each)',v:'https://www.youtube.com/watch?v=Bq6NcAoQDSk'},
-          {t:'Hip flexor static stretch: 30 sec each side',v:'https://www.youtube.com/watch?v=PypYfHwFuwg'}
-        ],
-        vids:[
-          {t:'Plank & Glute Bridge — Proper Form',c:'Athlean-X',u:'https://www.youtube.com/watch?v=pSHjTRCQxIw'},
-          {t:'Foam Roller Technique — Watch Before You Foam Roll',c:'Athlean-X',u:'https://www.youtube.com/watch?v=Bq6NcAoQDSk'}
-        ],
-        iq:null
-      },
-      {
-        title:'Film & Mental Reps', dur:'25 min',
-        desc:'Watch how elite strikers move. Mental repetition is real training — the brain processes movement patterns whether you are on the field or watching closely.',
-        items:[
-          {t:'Watch: how top strikers move without the ball (15 min)',v:'https://www.youtube.com/watch?v=MO6Nk8t3keY'},
-          {t:'Watch: open body shape and scanning in live play',v:'https://www.youtube.com/watch?v=QKWu7Rh896o'},
-          {t:'Write 2 things you noticed that you want to try next session'},
-          {t:'Light stretch: 10 min full body',v:'https://www.youtube.com/watch?v=9bz2jH64HQg'}
-        ],
-        vids:[{t:'Attacking Half Spaces — Striker Movement Analysis',c:'Football Coach',u:'https://www.youtube.com/watch?v=MO6Nk8t3keY'}],
-        iq:{title:'Pass or go',text:'Mental reps count — watch closely and imagine yourself making the right decision. The best strikers make decisions before they receive the ball.'}
-      }
-    ],
-    rest:{
-      title:'Full Rest', dur:'—',
-      desc:'Rest is when the body actually adapts. Keep this day completely training-free.',
-      items:[
-        {t:'No training — mandatory rest'},
-        {t:'Hydrate: 2–3L water throughout the day',v:'https://www.youtube.com/watch?v=9iMGFqMmUFs'},
-        {t:'Sleep: aim for 8–9 hours tonight',v:'https://www.youtube.com/watch?v=QC92h8NAsnM'},
-        {t:'Light walk or stretch only — 15 min max',v:'https://www.youtube.com/watch?v=PypYfHwFuwg'}
-      ],
-      vids:[{t:'Why Rest Days Are Non-Negotiable for Athletes',c:'Institute of Human Anatomy',u:'https://www.youtube.com/watch?v=E7TZVX7GVVM'}],
-      iq:null
-    }
+    ]
   },
-  {
-    num:'02', title:'Build', subtitle:'Intensity & Variety',
-    weeks:'Weeks 4–6', weekRange:[4,5,6],
-    desc:'Increase sprint distances and intensity. Add kicking power training. Introduce solo cone and wall drills that build decision-making patterns and match instincts.',
-    pills:['speed:Speed endurance','kick:Driven shots','iq:Half spaces','rest:Recovery'],
-    intense:[
+  kick: {
+    name: 'Power Kicks', icon: '🎯', color: 'kick',
+    levels: [
       {
-        title:'Speed Endurance', dur:'50 min',
-        desc:'Strikers need speed that lasts — not just the first burst. Extend sprint distances and add change-of-direction work that mirrors real match cuts.',
-        items:[
-          {t:'Dynamic warm-up: full routine (10 min)',v:'https://www.youtube.com/watch?v=RMDac1-Q0_A'},
-          {t:'4×60m at 90% effort — 2 min full rest between reps',v:'https://www.youtube.com/watch?v=NZo9y0ON7FU'},
-          {t:'5-10-5 shuttle drill: 4 reps each side, record times',v:'https://www.youtube.com/watch?v=jMsSUMoxZMI'},
-          {t:'L-drill: 4 reps — plant hard and drive out of the turn',v:'https://www.youtube.com/watch?v=jMsSUMoxZMI'},
-          {t:'Cone weave sprint: 6 cones 2m apart, weave full speed then sprint out',v:'https://www.youtube.com/watch?v=Xj4_oK-2kPw'},
-          {t:'Cool-down: jog 5 min + leg and hip stretch',v:'https://www.youtube.com/watch?v=9bz2jH64HQg'}
-        ],
-        vids:[
-          {t:'Speed & Agility — 5-10-5 Shuttle & L-Drill',c:'Overtime Athletes',u:'https://www.youtube.com/watch?v=jMsSUMoxZMI'},
-          {t:'3 Cone Drills for Speed & Agility in Soccer',c:'Soccer Coaching',u:'https://www.youtube.com/watch?v=Xj4_oK-2kPw'}
-        ],
-        iq:null
+        title: 'Power Kicks — Level 1: The Basics',
+        desc: 'Every powerful shot starts with the same setup. Learn it slow before we add speed.',
+        tasks: [
+          {t:'Warm up first — 5 min dynamic warm-up (leg swings, high knees, hip circles)', v:'https://www.youtube.com/shorts/BJTLAs43nkE', warmup:true},
+          {t:'Watch the short clip on shooting technique', v:'https://www.youtube.com/shorts/W6Kv5jVQ7bo'},
+          {t:'10 shots from a standing ball — plant foot beside the ball, lock your ankle', v:'https://www.youtube.com/watch?v=_f9ZIh8ESn4'},
+          {t:'10 more shots, same technique, both feet', v:'https://www.youtube.com/watch?v=_f9ZIh8ESn4'}
+        ]
       },
       {
-        title:'Power Striking', dur:'55 min',
-        desc:'Hip rotation and a locked ankle generate power — not muscling the ball. Medicine ball work builds rotational strength that transfers directly to shooting.',
-        items:[
-          {t:'Warm-up: ball work + hip activation (10 min)',v:'https://www.youtube.com/watch?v=RMDac1-Q0_A'},
-          {t:'Long-range driven shots 22–25m: 15 reps, aim low corners',v:'https://www.youtube.com/watch?v=1zNDn5ZKuBU'},
-          {t:'Volley technique: toss ball into air yourself, 10 reps — focus on timing and locked ankle',v:'https://www.youtube.com/watch?v=J1dfNXY3yMI'},
-          {t:'Half-volley: 10 reps — drop ball, strike as it rises',v:'https://www.youtube.com/watch?v=J1dfNXY3yMI'},
-          {t:'Med ball rotational throws against wall: 3×10 each side',v:'https://www.youtube.com/watch?v=5mhDMhiSMlI'},
-          {t:'Weak foot long shots: 10 reps outside the box',v:'https://www.youtube.com/watch?v=ipzEbfqAi2Y'},
-          {t:'Cool-down: hip flexor mobility',v:'https://www.youtube.com/watch?v=PypYfHwFuwg'}
-        ],
-        vids:[
-          {t:'How to Improve Shooting Power',c:'STRskillSchool',u:'https://www.youtube.com/watch?v=1zNDn5ZKuBU'},
-          {t:'Volley & Half-Volley Tutorial',c:'Unisport',u:'https://www.youtube.com/watch?v=J1dfNXY3yMI'}
-        ],
-        iq:null
+        title: 'Power Kicks — Level 2: Adding Power',
+        desc: 'Same technique, more power. The power comes from your hips, not your leg muscles.',
+        tasks: [
+          {t:'Warm up first — 5 min dynamic warm-up (leg swings, high knees, hip circles)', v:'https://www.youtube.com/shorts/BJTLAs43nkE', warmup:true},
+          {t:'Watch the power technique clip', v:'https://www.youtube.com/watch?v=ipzEbfqAi2Y'},
+          {t:'12 shots — focus on turning your hips through the ball', v:'https://www.youtube.com/watch?v=ipzEbfqAi2Y'},
+          {t:'10 shots with your weak foot — same technique', v:'https://www.youtube.com/watch?v=ipzEbfqAi2Y'}
+        ]
       },
       {
-        title:'High-Intensity Combination', dur:'60 min',
-        desc:'The full striker toolkit under pressure — sprint volume, crossing and finishing, and live 2v2 decision-making at match intensity.',
-        items:[
-          {t:'Dynamic warm-up + activation (10 min)',v:'https://www.youtube.com/watch?v=RMDac1-Q0_A'},
-          {t:'Sprint 40m → self-feed with rebounder or rolled ball → finish: 8 reps each side',v:'https://www.youtube.com/watch?v=JipbtZuzWVg'},
-          {t:'Wall pass into space, sprint onto ball, driven finish (10 reps)',v:'https://www.youtube.com/watch?v=1oxaF_Mx6Ok'},
-          {t:'Cut-inside solo drill: dribble at a cone from wide, cut inside onto stronger foot, shoot — 10 reps each side',v:'https://www.youtube.com/watch?v=5mQ4QbKHT_Y'},
-          {t:'Solo free flow (10 min): dribble, shoot, move freely — no structure, trust your feet',v:'https://www.youtube.com/watch?v=5mQ4QbKHT_Y'},
-          {t:'Cool-down: full stretch (8 min)',v:'https://www.youtube.com/watch?v=9bz2jH64HQg'}
-        ],
-        vids:[
-          {t:'Solo Finishing Session — Individual Shooting Training',c:'Best Soccer Tricks',u:'https://www.youtube.com/watch?v=JipbtZuzWVg'},
-          {t:'1000 Touch Wall Passing Session for Footballers',c:'Coach Javi',u:'https://www.youtube.com/watch?v=1oxaF_Mx6Ok'}
-        ],
-        iq:{title:'Runs that create space',text:'A well-timed diagonal run pulls a centre-back out of position. Train this solo: sprint the diagonal line, then sprint the seam it opens. When you play in a team, this movement will be automatic.'}
+        title: 'Power Kicks — Level 3: Moving Shots',
+        desc: 'Shooting while standing still is easy. Now let\'s shoot while moving — like in a real game.',
+        tasks: [
+          {t:'Warm up first — 5 min dynamic warm-up (leg swings, high knees, hip circles)', v:'https://www.youtube.com/shorts/BJTLAs43nkE', warmup:true},
+          {t:'Watch the moving shot technique clip', v:'https://www.youtube.com/watch?v=_f9ZIh8ESn4'},
+          {t:'15 shots — jog up to the ball and strike it on the move', v:'https://www.youtube.com/watch?v=_f9ZIh8ESn4'},
+          {t:'10 shots aiming for the corners — low and hard', v:'https://www.youtube.com/watch?v=1zNDn5ZKuBU'}
+        ]
+      },
+      {
+        title: 'Power Kicks — Level 4: Toss & Volley',
+        desc: 'Volleys are tricky — you have to time the strike perfectly. Toss the ball up yourself and practice.',
+        tasks: [
+          {t:'Warm up first — 5 min dynamic warm-up (leg swings, high knees, hip circles)', v:'https://www.youtube.com/shorts/BJTLAs43nkE', warmup:true},
+          {t:'Watch the volley technique clip', v:'https://www.youtube.com/watch?v=J1dfNXY3yMI'},
+          {t:'10 volleys — toss the ball up, strike it before it bounces', v:'https://www.youtube.com/watch?v=J1dfNXY3yMI'},
+          {t:'15 long-range shots from outside the box — aim low corners', v:'https://www.youtube.com/watch?v=1zNDn5ZKuBU'}
+        ]
+      },
+      {
+        title: 'Power Kicks — Level 5: Game Finisher',
+        desc: 'The hardest shooting session. Sprint first, then finish — exactly how it feels in a real match.',
+        tasks: [
+          {t:'Warm up first — 5 min dynamic warm-up (leg swings, high knees, hip circles)', v:'https://www.youtube.com/shorts/BJTLAs43nkE', warmup:true},
+          {t:'Watch the game-speed finishing clip', v:'https://www.youtube.com/watch?v=qg2SKFk1_D8'},
+          {t:'Sprint 20m, then strike — 10 reps, full effort every time', v:'https://www.youtube.com/watch?v=qg2SKFk1_D8'},
+          {t:'10 finishing reps using only your weak foot', v:'https://www.youtube.com/watch?v=ipzEbfqAi2Y'}
+        ]
       }
-    ],
-    light:[
-      {
-        title:'Game IQ — Half Spaces', dur:'40 min',
-        desc:'Half-space movement and decision-making concepts trained solo using cones as markers. Low physical load — this is brain training.',
-        items:[
-          {t:'Solo cone dribble warm-up: weave through 6 cones at easy pace for 10 min — open body, head up',v:'https://www.youtube.com/watch?v=Xj4_oK-2kPw'},
-          {t:'Half-space cone run: set 2 cones as CB and fullback gaps — dribble into the space between them 10 reps',v:'https://www.youtube.com/watch?v=8OdviDQn5g8'},
-          {t:'Half-space receiving: check into zone between CB and fullback',v:'https://www.youtube.com/watch?v=MO6Nk8t3keY'},
-          {t:'Run-in-behind drill: place a cone 20m away as target — sprint in behind it from different angles, 8 reps',v:'https://www.youtube.com/watch?v=MO6Nk8t3keY'},
-          {t:'Mental review: watch the half-space video again, visualize yourself making the run into that space',v:'https://www.youtube.com/watch?v=MO6Nk8t3keY'}
-        ],
-        vids:[
-          {t:'Why the Half Spaces Are Important in Football',c:'SciSports',u:'https://www.youtube.com/watch?v=8OdviDQn5g8'},
-          {t:'Attacking Half Spaces Explained',c:'Football Coach',u:'https://www.youtube.com/watch?v=MO6Nk8t3keY'}
-        ],
-        iq:{title:'Half spaces',text:'The zones between the centre-back and full-back are called half-spaces. Strikers who drift into these spots receive the ball with more time and better angles. Drift wide, then check back just before the ball is played.'}
-      },
-      {
-        title:'Recovery + Core', dur:'35 min',
-        desc:'Core is the engine of kicking power. Keep this session controlled — no fatigue accumulation.',
-        items:[
-          {t:'Light jog: 20 min easy pace',v:'https://www.youtube.com/watch?v=E7TZVX7GVVM'},
-          {t:'Plank: 3×45 sec',v:'https://www.youtube.com/watch?v=pSHjTRCQxIw'},
-          {t:'Copenhagen adductor hold: 3×20 sec each side',v:'https://www.youtube.com/watch?v=qPwLkKqHFkM'},
-          {t:'Dead bug: 3×10 reps each side — lower back flat',v:'https://www.youtube.com/watch?v=4XLEnwUr1d8'},
-          {t:'Foam roll + static stretch (10 min)',v:'https://www.youtube.com/watch?v=Bq6NcAoQDSk'}
-        ],
-        vids:[
-          {t:'Core Exercises — Plank, Copenhagen, Dead Bug',c:'Athlean-X',u:'https://www.youtube.com/watch?v=pSHjTRCQxIw'},
-          {t:'Copenhagen Plank — How to Perform Correctly',c:'Physio Tutorial',u:'https://www.youtube.com/watch?v=qPwLkKqHFkM'}
-        ],
-        iq:null
-      },
-      {
-        title:'Film + Pattern Walk-Through', dur:'30 min',
-        desc:'Study the half-space concept in action. Walk through attacking patterns you will use next intense session.',
-        items:[
-          {t:'Watch: attacking half spaces — how strikers exploit them (15 min)',v:'https://www.youtube.com/watch?v=MO6Nk8t3keY'},
-          {t:'Solo pattern walk-through: dribble to a cone, fake left/right, accelerate into space — 10 reps',v:'https://www.youtube.com/watch?v=5mQ4QbKHT_Y'},
-          {t:'Write: one movement you will try in your next game',v:'https://www.youtube.com/watch?v=MO6Nk8t3keY'},
-          {t:'Full body stretch (10 min)',v:'https://www.youtube.com/watch?v=9bz2jH64HQg'}
-        ],
-        vids:[{t:'Attacking Half Spaces — Striker Movement Analysis',c:'Football Coach',u:'https://www.youtube.com/watch?v=MO6Nk8t3keY'}],
-        iq:{title:'Runs that create space',text:'Train diagonal runs solo: mark out a CB and fullback position with cones, then sprint the half-space gap between them. When you join team training, this movement will already be instinct.'}
-      }
-    ],
-    rest:{
-      title:'Full Rest', dur:'—',
-      desc:'Mandatory recovery. The harder Phase 2 sessions require proper rest to adapt.',
-      items:[
-        {t:'No training — mandatory rest'},
-        {t:'Hydrate and eat well',v:'https://www.youtube.com/watch?v=9iMGFqMmUFs'},
-        {t:'Sleep 8–9 hours',v:'https://www.youtube.com/watch?v=QC92h8NAsnM'},
-        {t:'Foam roll only if sore — 10 min max',v:'https://www.youtube.com/watch?v=Bq6NcAoQDSk'}
-      ],
-      vids:[{t:'Why Rest Days Are Non-Negotiable',c:'Institute of Human Anatomy',u:'https://www.youtube.com/watch?v=E7TZVX7GVVM'}],
-      iq:null
-    }
+    ]
   },
-  {
-    num:'03', title:'Power', subtitle:'Peak Output',
-    weeks:'Weeks 7–9', weekRange:[7,8,9],
-    desc:'Maximum sprint output. Full-power shooting under fatigue. High-pressure 1v1 and 2v2 scenarios that mirror real match demands. This is the hardest phase.',
-    pills:['speed:Max velocity','kick:Fatigue finishing','iq:1v1 mastery','rest:Priority rest'],
-    intense:[
+  iq: {
+    name: 'Game IQ', icon: '🧠', color: 'iq',
+    levels: [
       {
-        title:'Max Velocity Sprints', dur:'45 min',
-        desc:'Today we reach absolute top speed. Full recovery between every rep is mandatory — speed is a skill and can only be trained when fresh.',
-        items:[
-          {t:'Extended warm-up: 15 min with strides at 80% then 90%',v:'https://www.youtube.com/watch?v=RMDac1-Q0_A'},
-          {t:'Fly 30s: 10m rolling start into 30m at absolute max — 6 reps',v:'https://www.youtube.com/watch?v=NZo9y0ON7FU'},
-          {t:'3 full minutes rest between every rep — set a timer',v:'https://www.youtube.com/watch?v=NZo9y0ON7FU'},
-          {t:'Flying 10m: 3 reps — pure first-step explosion',v:'https://www.youtube.com/watch?v=NZo9y0ON7FU'},
-          {t:'Cool-down: slow jog 10 min + full static stretch',v:'https://www.youtube.com/watch?v=9bz2jH64HQg'}
-        ],
-        vids:[{t:'Top Speed Drills — Flying Sprints & Falling Starts',c:'Overtime Athletes',u:'https://www.youtube.com/watch?v=NZo9y0ON7FU'}],
-        iq:null
+        title: 'Game IQ — Level 1: Look First',
+        desc: 'The best players check around them before the ball even arrives. Let\'s build that habit.',
+        tasks: [
+          {t:'Watch the short clip on checking your shoulder', v:'https://www.youtube.com/shorts/WO07VKhU3Wk'},
+          {t:'Pass the ball against a wall 15 times — look behind you before each touch', v:'https://www.youtube.com/watch?v=1oxaF_Mx6Ok'},
+          {t:'Practice receiving at an angle, not facing straight ahead — 10 reps', v:'https://www.youtube.com/watch?v=zk2Sua-rr3Y'}
+        ]
       },
       {
-        title:'Finishing Under Fatigue', dur:'60 min',
-        desc:'Most goals are scored after a sprint. Technique must hold when your lungs are burning — sprint, receive, shoot in 3 seconds.',
-        items:[
-          {t:'Warm-up: ball work and hip activation (10 min)',v:'https://www.youtube.com/watch?v=RMDac1-Q0_A'},
-          {t:'Sprint 30m → receive → shoot within 3 seconds: 10 reps',v:'https://www.youtube.com/watch?v=JipbtZuzWVg'},
-          {t:'Toss-and-volley after 20m sprint: sprint, toss ball up yourself, volley — 8 reps each side',v:'https://www.youtube.com/watch?v=J1dfNXY3yMI'},
-          {t:'Driven shots: 15 reps at maximum effort',v:'https://www.youtube.com/watch?v=1zNDn5ZKuBU'},
-          {t:'Weak foot finishing: 10 reps at match intensity',v:'https://www.youtube.com/watch?v=ipzEbfqAi2Y'},
-          {t:'Cut-inside finish: 8 reps each side from wide position',v:'https://www.youtube.com/watch?v=JipbtZuzWVg'},
-          {t:'Cool-down: jog + full stretch (8 min)',v:'https://www.youtube.com/watch?v=9bz2jH64HQg'}
-        ],
-        vids:[
-          {t:'Solo Finishing Session — Individual Shooting Training',c:'Best Soccer Tricks',u:'https://www.youtube.com/watch?v=JipbtZuzWVg'},
-          {t:'How to Improve Shooting Power',c:'STRskillSchool',u:'https://www.youtube.com/watch?v=1zNDn5ZKuBU'}
-        ],
-        iq:null
+        title: 'Game IQ — Level 2: When to Scan',
+        desc: 'There are 3 perfect moments to look around during a game. Today we learn what they are.',
+        tasks: [
+          {t:'Watch the "when to scan" clip', v:'https://www.youtube.com/shorts/K8jTWP6Stj4'},
+          {t:'Wall passing — scan once before you receive, once after, 15 reps', v:'https://www.youtube.com/watch?v=1oxaF_Mx6Ok'},
+          {t:'Dribble through 4 cones, head up the whole time', v:'https://www.youtube.com/watch?v=7Ot-JKwKFi4'}
+        ]
       },
       {
-        title:'1v1 Mastery + Match Sim', dur:'65 min',
-        desc:'1v1 movement patterns and finishing trained solo — cones act as defenders. Build decision-making reads and finishing confidence without needing a partner.',
-        items:[
-          {t:'Solo warm-up: ball juggling + cone weave at easy pace (12 min)',v:'https://www.youtube.com/watch?v=qFVREk1qEKQ'},
-          {t:'1v1 centre: 10 duels — attack the space, not the person',v:'https://www.youtube.com/watch?v=5mQ4QbKHT_Y'},
-          {t:'1v1 wide left: 8 duels — cut inside onto stronger foot',v:'https://www.youtube.com/watch?v=5mQ4QbKHT_Y'},
-          {t:'1v1 wide right: 8 duels',v:'https://www.youtube.com/watch?v=5mQ4QbKHT_Y'},
-          {t:'Step-over + scissors feint: 5 slow reps then live use',v:'https://www.youtube.com/watch?v=xSVSGHSQyGs'},
-          {t:'Cone gate finishing: set 2 cones 1m apart as a gate-defender — dribble at it, beat it, finish on goal. 3×8 reps',v:'https://www.youtube.com/watch?v=5mQ4QbKHT_Y'},
-          {t:'Session review: name your best rep today and one technique point to sharpen',v:'https://www.youtube.com/watch?v=XCaOePc3lCQ'},
-          {t:'Cool-down: full stretch (8 min)',v:'https://www.youtube.com/watch?v=9bz2jH64HQg'}
-        ],
-        vids:[
-          {t:'1v1 Dribbling — How to Beat Any Defender',c:'Online Soccer Academy',u:'https://www.youtube.com/watch?v=5mQ4QbKHT_Y'},
-          {t:'Step-Over & Scissors Feint Tutorial',c:'Unisport',u:'https://www.youtube.com/watch?v=xSVSGHSQyGs'}
-        ],
-        iq:{title:"Reading the defender's body",text:"Weight on front foot — they're committed; feint and go. Weight back — they're waiting; accelerate into the space. This decision happens in under a second. Train it until it's automatic."}
+        title: 'Game IQ — Level 3: Reading a Defender',
+        desc: 'Cones can act like a defender. Learn to read which way to go based on how they\'re facing.',
+        tasks: [
+          {t:'Watch the 1v1 dribbling move clip', v:'https://www.youtube.com/shorts/PQ_P_-p9W-k'},
+          {t:'Set up a cone — dribble at it, fake one way, go the other. 10 reps', v:'https://www.youtube.com/watch?v=5mQ4QbKHT_Y'},
+          {t:'Same drill, but finish with a shot every time — 10 reps', v:'https://www.youtube.com/watch?v=5mQ4QbKHT_Y'}
+        ]
+      },
+      {
+        title: 'Game IQ — Level 4: Finding Space',
+        desc: 'Great strikers don\'t stand still. Learn to find pockets of space and attack them.',
+        tasks: [
+          {t:'Watch the finding space clip', v:'https://www.youtube.com/watch?v=8OdviDQn5g8'},
+          {t:'Sprint to a cone, check back to an imaginary teammate, then sprint to space — 8 reps', v:'https://www.youtube.com/watch?v=MO6Nk8t3keY'},
+          {t:'Practice timing a run — wait, then explode into the open space, 8 reps', v:'https://www.youtube.com/watch?v=MO6Nk8t3keY'}
+        ]
+      },
+      {
+        title: 'Game IQ — Level 5: Full Decision Making',
+        desc: 'The hardest IQ session — combine scanning, reading defenders, and finding space into one flow.',
+        tasks: [
+          {t:'Watch the full striker movement breakdown', v:'https://www.youtube.com/watch?v=MO6Nk8t3keY'},
+          {t:'Cone course: dribble, scan, beat a cone, find space, finish — 5 full reps', v:'https://www.youtube.com/watch?v=qg2SKFk1_D8'},
+          {t:'Pick your best rep today and think about what made it work', v:'https://www.youtube.com/watch?v=XCaOePc3lCQ'}
+        ]
       }
-    ],
-    light:[
-      {
-        title:'1v1 Film + Slow Technique', dur:'35 min',
-        desc:'Study how elite strikers read defenders. Practise the moves at slow speed so your body knows them before game intensity.',
-        items:[
-          {t:'Watch: how to beat a defender in 1v1 (10 min)',v:'https://www.youtube.com/watch?v=5mQ4QbKHT_Y'},
-          {t:'Slow step-over reps: 10 each foot — feel the weight shift',v:'https://www.youtube.com/watch?v=xSVSGHSQyGs'},
-          {t:'Body swerve slow reps: 8 each direction',v:'https://www.youtube.com/watch?v=xSVSGHSQyGs'},
-          {t:'Foam roll and stretch (10 min)',v:'https://www.youtube.com/watch?v=Bq6NcAoQDSk'}
-        ],
-        vids:[
-          {t:'Step-Over, Scissors & Body Swerve Tutorial',c:'Unisport',u:'https://www.youtube.com/watch?v=xSVSGHSQyGs'},
-          {t:'1v1 Dribbling Skills for Strikers',c:'Online Soccer Academy',u:'https://www.youtube.com/watch?v=5mQ4QbKHT_Y'}
-        ],
-        iq:{title:"Reading the defender's body",text:'Weight on front foot — committed; feint and go. Weight back — waiting; accelerate directly. This decision happens in under a second and is built through repetition.'}
-      },
-      {
-        title:'Active Recovery + Shield', dur:'30 min',
-        desc:'Light session focused on shielding technique and recovery. Trained at low intensity so skills become automatic under pressure.',
-        items:[
-          {t:'Easy jog: 15 min at conversational pace',v:'https://www.youtube.com/watch?v=d6jg-hoDDlM'},
-          {t:'Body shield solo: stand close to a wall, back to it, practise the turn-and-go motion both directions 10 reps',v:'https://www.youtube.com/watch?v=GzTYn1QzPa4'},
-          {t:'Foam roll: quads and calves (60 sec each)',v:'https://www.youtube.com/watch?v=Bq6NcAoQDSk'},
-          {t:'Hip flexor stretch: 30 sec each side',v:'https://www.youtube.com/watch?v=PypYfHwFuwg'}
-        ],
-        vids:[{t:'Foam Roller Technique — Watch Before You Foam Roll',c:'Athlean-X',u:'https://www.youtube.com/watch?v=Bq6NcAoQDSk'}],
-        iq:{title:'Body shield',text:'Stay between the defender and the ball, lower your centre of gravity, feel their position with your arm, then turn into the space where they are not. Buys a half-second to decide.'}
-      },
-      {
-        title:'Sleep & Rest Science', dur:'20 min',
-        desc:'This is the hardest phase — rest is not optional. Understand why the recovery you are doing is directly building your speed and power.',
-        items:[
-          {t:'Watch: how sleep builds athletic performance (10 min)',v:'https://www.youtube.com/watch?v=QC92h8NAsnM'},
-          {t:'Full body light stretch (10 min)',v:'https://www.youtube.com/watch?v=9bz2jH64HQg'},
-          {t:'Hydrate well today',v:'https://www.youtube.com/watch?v=9iMGFqMmUFs'}
-        ],
-        vids:[{t:'How Sleep Transforms Athletic Performance',c:'Andrew Huberman',u:'https://www.youtube.com/watch?v=QC92h8NAsnM'}],
-        iq:null
-      }
-    ],
-    rest:{
-      title:'Full Rest — Priority', dur:'—',
-      desc:'Phase 3 is the hardest phase. This rest day is non-negotiable. Speed and power gains only happen when the body is allowed to rebuild.',
-      items:[
-        {t:'No training — mandatory full rest'},
-        {t:'Sleep 9 hours if possible',v:'https://www.youtube.com/watch?v=QC92h8NAsnM'},
-        {t:'Hydrate: 2–3L water',v:'https://www.youtube.com/watch?v=9iMGFqMmUFs'},
-        {t:'Eat well: carbs + protein to fuel recovery',v:'https://www.youtube.com/watch?v=9iMGFqMmUFs'}
-      ],
-      vids:[
-        {t:'Why Athletes MUST Rest — Science Explained',c:'Institute of Human Anatomy',u:'https://www.youtube.com/watch?v=E7TZVX7GVVM'},
-        {t:'Sleep & Athletic Performance',c:'Andrew Huberman',u:'https://www.youtube.com/watch?v=QC92h8NAsnM'}
-      ],
-      iq:null
-    }
-  },
-  {
-    num:'04', title:'Peak', subtitle:'Pre-Season Sharpness',
-    weeks:'Weeks 10–12', weekRange:[10,11,12],
-    desc:'Taper volume. Maintain all gains. Arrive at pre-season fast, powerful, and tactically sharp — not fatigued. The goal this phase is confidence and rhythm.',
-    pills:['speed:Explosive accel','kick:Placement','iq:Pattern play','rest:Taper'],
-    intense:[
-      {
-        title:'Sharp Acceleration', dur:'40 min',
-        desc:'Reduce total sprint volume 25% vs Phase 3. Feel quick and explosive — do not chase maximum numbers heading into pre-season.',
-        items:[
-          {t:'Dynamic warm-up (10 min)',v:'https://www.youtube.com/watch?v=RMDac1-Q0_A'},
-          {t:'Reaction-start sprints: 4×10m from standing, sitting, lying',v:'https://www.youtube.com/watch?v=NZo9y0ON7FU'},
-          {t:'4×30m acceleration — feel quick and relaxed',v:'https://www.youtube.com/watch?v=NZo9y0ON7FU'},
-          {t:'2×60m at match pace — efficient stride',v:'https://www.youtube.com/watch?v=NZo9y0ON7FU'},
-          {t:'Agility ladder refresher: 2 patterns × 2 reps',v:'https://www.youtube.com/watch?v=6NnGQl-TZHs'},
-          {t:'Cool-down: slow jog + stretch (8 min)',v:'https://www.youtube.com/watch?v=9bz2jH64HQg'}
-        ],
-        vids:[{t:'Speed Drills for Acceleration — Taper Phase',c:'Overtime Athletes',u:'https://www.youtube.com/watch?v=NZo9y0ON7FU'}],
-        iq:null
-      },
-      {
-        title:'Placed Finishing', dur:'50 min',
-        desc:'Power is built. Now sharpen placement. These reps build the rhythm and confidence a striker needs heading into pre-season.',
-        items:[
-          {t:'Warm-up: ball work + light activation (8 min)',v:'https://www.youtube.com/watch?v=qFVREk1qEKQ'},
-          {t:'Near post driven: 10 reps — tight angle, low and hard',v:'https://www.youtube.com/watch?v=_f9ZIh8ESn4'},
-          {t:'Far post bent: 10 reps — open body, follow through across',v:'https://www.youtube.com/watch?v=ipzEbfqAi2Y'},
-          {t:'Low driven corners: 15 reps — bottom 6 inches of post',v:'https://www.youtube.com/watch?v=1zNDn5ZKuBU'},
-          {t:'Chip shot: 6 reps — 1v1 goalkeeper simulation',v:'https://www.youtube.com/watch?v=_f9ZIh8ESn4'},
-          {t:'Weak foot: 10 reps — all finish types',v:'https://www.youtube.com/watch?v=ipzEbfqAi2Y'},
-          {t:'Note 3 strikes that felt perfect — what made them work?',v:'https://www.youtube.com/watch?v=_f9ZIh8ESn4'}
-        ],
-        vids:[
-          {t:'5 Basic Shooting Tips for Beginners',c:'Unisport',u:'https://www.youtube.com/watch?v=_f9ZIh8ESn4'},
-          {t:'Shoot with Power — Placement & Technique',c:'Unisport',u:'https://www.youtube.com/watch?v=ipzEbfqAi2Y'}
-        ],
-        iq:null
-      },
-      {
-        title:'Full Game Scrimmage', dur:'65 min',
-        desc:'Solo finishing circuit combining all techniques from the program. High confidence, high quality — the 12 weeks of work are done.',
-        items:[
-          {t:'Full solo warm-up: dynamic stretch + ball juggling + cone weave (15 min)',v:'https://www.youtube.com/watch?v=RMDac1-Q0_A'},
-          {t:'Full finishing circuit: sprint → receive → shoot, volleys, driven shots, weak foot, cut-inside — 3 full rounds',v:'https://www.youtube.com/watch?v=JipbtZuzWVg'},
-          {t:'Cone dribbling to goal: set 4 cones as a course, beat each one, finish — vary the approach angle each rep',v:'https://www.youtube.com/watch?v=Xj4_oK-2kPw'},
-          {t:'Mental review: replay your best finish or move from today — what made it work?',v:'https://www.youtube.com/watch?v=XCaOePc3lCQ'},
-          {t:'Cool-down: jog + stretch (10 min)',v:'https://www.youtube.com/watch?v=9bz2jH64HQg'},
-          {t:'Celebrate — 12 weeks complete',v:'https://www.youtube.com/watch?v=XCaOePc3lCQ'}
-        ],
-        vids:[{t:'Solo Finishing Session — Individual Shooting Training',c:'Best Soccer Tricks',u:'https://www.youtube.com/watch?v=JipbtZuzWVg'}],
-        iq:{title:'Confidence is a skill',text:'Missed shot, bad touch, wrong decision — the next moment is new. The best strikers have the shortest memories. Trust the 12 weeks of work and play fearlessly.'}
-      }
-    ],
-    light:[
-      {
-        title:'Pattern Play Walk-Through', dur:'40 min',
-        desc:'Apply all IQ concepts in fluid sequences. Low intensity — sharpening timing and confidence, not accumulating fatigue.',
-        items:[
-          {t:'Solo activation: wall passing + cone weave at easy pace (12 min)',v:'https://www.youtube.com/watch?v=1oxaF_Mx6Ok'},
-          {t:'Wall pass + run in behind: 6 reps each side',v:'https://www.youtube.com/watch?v=1oxaF_Mx6Ok'},
-          {t:'Solo overlap simulation: sprint wide to a cone (winger position), check back into the half-space, receive an imaginary pass and shoot — 6 reps each side',v:'https://www.youtube.com/watch?v=8OdviDQn5g8'},
-          {t:'Onside timing run: delay until passer moves, burst in behind',v:'https://www.youtube.com/watch?v=ibB0Ip1Xgrg'},
-          {t:'Review: which pattern felt most natural?',v:'https://www.youtube.com/watch?v=ibB0Ip1Xgrg'}
-        ],
-        vids:[
-          {t:'1000 Touch Wall Passing Session for Footballers',c:'Coach Javi',u:'https://www.youtube.com/watch?v=1oxaF_Mx6Ok'},
-          {t:'5 Scanning Drills to Improve Football IQ',c:'Training 1-2-1',u:'https://www.youtube.com/watch?v=YFnhW3hcuU8'}
-        ],
-        iq:{title:'Timing runs to stay onside',text:'Delay your run until the passer is about to play the ball. Move WITH the pass, not before it. The forwards who score the most goals have timing that feels a half-step later than you expect.'}
-      },
-      {
-        title:'Taper Recovery', dur:'25 min',
-        desc:'Light movement and stretch only. Protect the body for the pre-season that is coming.',
-        items:[
-          {t:'15 min easy walk or light jog',v:'https://www.youtube.com/watch?v=d6jg-hoDDlM'},
-          {t:'Foam roll: full body (10 min)',v:'https://www.youtube.com/watch?v=Bq6NcAoQDSk'},
-          {t:'Static stretch: hips, hamstrings, quads',v:'https://www.youtube.com/watch?v=PypYfHwFuwg'}
-        ],
-        vids:[{t:'Foam Roller Technique — Watch Before You Foam Roll',c:'Athlean-X',u:'https://www.youtube.com/watch?v=Bq6NcAoQDSk'}],
-        iq:null
-      },
-      {
-        title:'Film — Striker Study', dur:'25 min',
-        desc:'Watch how elite strikers position themselves. Mental reps reinforce everything you have trained.',
-        items:[
-          {t:'Watch: striker off-ball movement analysis (15 min)',v:'https://www.youtube.com/watch?v=MO6Nk8t3keY'},
-          {t:'Write: 2 movements you saw that you will apply in pre-season',v:'https://www.youtube.com/watch?v=MO6Nk8t3keY'},
-          {t:'Light stretch (10 min)',v:'https://www.youtube.com/watch?v=9bz2jH64HQg'}
-        ],
-        vids:[{t:'Attacking Half Spaces — Striker Movement Analysis',c:'Football Coach',u:'https://www.youtube.com/watch?v=MO6Nk8t3keY'}],
-        iq:{title:'Confidence is a skill',text:'The best strikers trust their work and play fearlessly. Watch closely, imagine yourself in those situations, and carry that confidence into pre-season.'}
-      }
-    ],
-    rest:{
-      title:'Taper Rest', dur:'—',
-      desc:'Phase 4 taper rest. The work is done — protect the body now.',
-      items:[
-        {t:'No training'},
-        {t:'Sleep 8–9 hours',v:'https://www.youtube.com/watch?v=QC92h8NAsnM'},
-        {t:'Stay hydrated and eat well',v:'https://www.youtube.com/watch?v=9iMGFqMmUFs'},
-        {t:'Reflect: how far have you come since Week 1?',v:'https://www.youtube.com/watch?v=XCaOePc3lCQ'}
-      ],
-      vids:[{t:'Why Rest & Sleep Are Essential for Athletes',c:'Institute of Human Anatomy',u:'https://www.youtube.com/watch?v=E7TZVX7GVVM'}],
-      iq:null
-    }
+    ]
   }
-];
+};
 
-// ─── HELPERS ──────────────────────────────────────────────────────────────────
-function key(pi,wk,day,ii){ return pi+'_'+wk+'_'+day+'_'+ii; }
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let state = {};
+try { state = JSON.parse(localStorage.getItem(SK) || '{}'); } catch(e) {}
+// state.progress = {speed: 0, kick: 0, iq: 0}  -> current unlocked level index (0-based, completed count)
+// state.tasksDone = {trackKey_levelIdx_taskIdx: true}
 
-function session(pi, day) {
-  var type = sched[day] || 'rest';
-  var ph = phases[pi];
-  if (type === 'rest') return Object.assign({}, ph.rest, {type:'rest'});
-  if (type === 'light') {
-    var ld = DAYS.filter(function(d){ return sched[d]==='light'; });
-    var idx = ld.indexOf(day) % ph.light.length;
-    return Object.assign({}, ph.light[idx], {type:'light'});
-  }
-  var id2 = DAYS.filter(function(d){ return sched[d]==='intense'; });
-  var idx2 = id2.indexOf(day) % ph.intense.length;
-  return Object.assign({}, ph.intense[idx2], {type:'intense'});
-}
+if (!state.progress) state.progress = {speed:0, kick:0, iq:0};
+if (!state.tasksDone) state.tasksDone = {};
 
-function counts() {
-  return DAYS.reduce(function(a,d){
-    var t=sched[d]||'unset'; a[t]=(a[t]||0)+1; return a;
-  },{intense:0,light:0,rest:0,unset:0});
-}
+function save() { try { localStorage.setItem(SK, JSON.stringify(state)); } catch(e) {} }
 
-function totalItems() {
-  var t=0;
-  phases.forEach(function(ph,pi){
-    ph.weekRange.forEach(function(wk){
-      DAYS.forEach(function(day){ t += session(pi,day).items.length; });
-    });
+let activeTrack = null;
+let activeLevel = null;
+
+// ─── RENDER: TRACK PROGRESS BARS ───────────────────────────────────────────────
+function renderTracks() {
+  let html = '';
+  Object.keys(TRACKS).forEach(key => {
+    const track = TRACKS[key];
+    const completed = state.progress[key];
+    const total = track.levels.length;
+    const pct = Math.min(100, Math.round((completed/total)*100));
+    html += `<div class="track">
+      <div class="track-icon">${track.icon}</div>
+      <div class="track-name ${track.color}">${track.name}</div>
+      <div class="track-bar-track"><div class="track-bar-fill ${track.color}" style="width:${pct}%"></div></div>
+      <div class="track-level">Level ${Math.min(completed+1,total)} of ${total}</div>
+    </div>`;
   });
-  return t;
+  document.getElementById('tracks').innerHTML = html;
 }
 
-function doneItems() {
-  var d=0;
-  phases.forEach(function(ph,pi){
-    ph.weekRange.forEach(function(wk){
-      DAYS.forEach(function(day){
-        session(pi,day).items.forEach(function(_,ii){ if(prog[key(pi,wk,day,ii)]) d++; });
-      });
-    });
+// ─── RENDER: CHOICE CARDS ──────────────────────────────────────────────────────
+function renderChoices() {
+  let html = '';
+  Object.keys(TRACKS).forEach(key => {
+    const track = TRACKS[key];
+    const completedCount = state.progress[key];
+    const nextLevelIdx = completedCount; // 0-based index of next level to do
+    const isMaxed = nextLevelIdx >= track.levels.length;
+    const levelIdx = isMaxed ? track.levels.length - 1 : nextLevelIdx;
+    const level = track.levels[levelIdx];
+
+    html += `<div class="choice-card ${track.color}" onclick="openSession('${key}', ${levelIdx})">
+      <div class="choice-icon">${track.icon}</div>
+      <div class="choice-info">
+        <div class="choice-track-label ${track.color}">${track.name}</div>
+        <div class="choice-title">${level.title.split(': ')[1] || level.title}</div>
+        <div class="choice-desc">${level.desc}</div>
+        <div class="choice-level">${isMaxed ? 'Mastered — replay anytime' : 'Level ' + (levelIdx+1) + ' of ' + track.levels.length}</div>
+      </div>
+      <div class="choice-arrow">→</div>
+    </div>`;
   });
-  return d;
+  document.getElementById('choices').innerHTML = html;
 }
 
-function updateProgress() {
-  var t=totalItems(), d=doneItems();
-  var pct = t>0 ? Math.round(d/t*100) : 0;
-  document.getElementById('pct').textContent = pct+'%';
-  document.getElementById('pbar').style.width = pct+'%';
+// ─── SESSION VIEW ───────────────────────────────────────────────────────────────
+function openSession(trackKey, levelIdx) {
+  activeTrack = trackKey;
+  activeLevel = levelIdx;
+  document.getElementById('chooseView').style.display = 'none';
+  document.getElementById('sessionView').style.display = 'block';
+  renderSession();
+  window.scrollTo(0,0);
 }
 
-// ─── PICKER ───────────────────────────────────────────────────────────────────
-function buildPicker() {
-  var html = '';
-  DAYS.forEach(function(d){
-    var t = sched[d]||'unset';
-    html += '<div class="dp '+(t!=='unset'?t:'')+'" id="dp_'+d+'" onclick="cycleDay(\''+d+'\')">';
-    html += '<div class="dp-name">'+d+'</div>';
-    html += '<div class="dp-badge">'+badge(t)+'</div>';
-    html += '</div>';
+function goBack() {
+  activeTrack = null;
+  activeLevel = null;
+  document.getElementById('sessionView').style.display = 'none';
+  document.getElementById('chooseView').style.display = 'block';
+  renderTracks();
+  renderChoices();
+}
+
+function taskKey(trackKey, levelIdx, taskIdx) {
+  return trackKey + '_' + levelIdx + '_' + taskIdx;
+}
+
+function renderSession() {
+  const track = TRACKS[activeTrack];
+  const level = track.levels[activeLevel];
+
+  let tasksHtml = '';
+  level.tasks.forEach((task, ti) => {
+    const k = taskKey(activeTrack, activeLevel, ti);
+    const done = !!state.tasksDone[k];
+    const isWarmup = !!task.warmup;
+    tasksHtml += `<div class="task-card ${done?'done':''} ${isWarmup?'warmup':''}" id="tc_${ti}">
+      <div class="task-top" onclick="toggleTask(${ti})">
+        <div class="task-cb">${done?'✓':''}</div>
+        <div class="task-num">${ti+1}</div>
+        <div class="task-text">${isWarmup ? '<span class="warmup-badge">Warm-up</span>' : ''}${task.t}</div>
+        ${task.v ? `<a class="task-watch" href="${task.v}" target="_blank" rel="noopener" onclick="event.stopPropagation()">▶ watch</a>` : ''}
+      </div>
+    </div>`;
   });
-  document.getElementById('picker').innerHTML = html;
-  refreshCounts();
+
+  const allDone = level.tasks.every((_, ti) => state.tasksDone[taskKey(activeTrack, activeLevel, ti)]);
+  const alreadyCompleted = activeLevel < state.progress[activeTrack];
+
+  let html = `
+    <div class="session-hero ${track.color}">
+      <div class="session-hero-label ${track.color}">${track.name} · Level ${activeLevel+1}</div>
+      <div class="session-hero-title">${level.title.split(': ')[1] || level.title}</div>
+      <div class="session-hero-desc">${level.desc}</div>
+    </div>
+    <div class="sec-title">Today's tasks</div>
+    <div class="task-list">${tasksHtml}</div>
+    <button class="complete-btn" id="completeBtn" ${allDone ? '' : 'disabled'} onclick="completeSession()">
+      ${alreadyCompleted ? 'Replay Complete ✓' : (allDone ? 'Complete Session →' : 'Finish all tasks to continue')}
+    </button>
+    <div class="unlock-toast" id="unlockToast">
+      <div class="unlock-toast-label">🔓 Unlocked</div>
+      <div class="unlock-toast-title" id="unlockTitle"></div>
+    </div>
+  `;
+  document.getElementById('sessionContent').innerHTML = html;
 }
 
-function badge(t){ return {intense:'HI',light:'LT',rest:'🛌',unset:'—'}[t]||'—'; }
-
-function cycleDay(d) {
-  var order = ['intense','light','rest','unset'];
-  var cur = sched[d]||'unset';
-  var ci = order.indexOf(cur);
-  var others = DAYS.filter(function(x){ return x!==d; });
-  var oc = others.reduce(function(a,x){ var t=sched[x]||'unset'; a[t]=(a[t]||0)+1; return a; },{intense:0,light:0,rest:0,unset:0});
-  var caps = {intense:3,light:3,rest:1,unset:99};
-  for (var i=1; i<=order.length; i++) {
-    var cand = order[(ci+i)%order.length];
-    if ((oc[cand]||0) < caps[cand]) { sched[d]=cand; break; }
-  }
-  var el = document.getElementById('dp_'+d);
-  var nt = sched[d]||'unset';
-  el.className = 'dp '+(nt!=='unset'?nt:'');
-  el.querySelector('.dp-badge').textContent = badge(nt);
-  refreshCounts();
-}
-
-function refreshCounts() {
-  var c = counts();
-  document.getElementById('ci').textContent = c.intense;
-  document.getElementById('cl').textContent = c.light;
-  document.getElementById('cr').textContent = c.rest;
-  var w = document.getElementById('warn');
-  var btn = document.getElementById('startBtn');
-  var assigned = c.intense+c.light+c.rest;
-  if (c.intense<3) { w.textContent='Select '+(3-c.intense)+' more intense day'+(3-c.intense>1?'s':'')+'.'; w.className='warn'; btn.disabled=true; }
-  else if (c.light<3) { w.textContent='Select '+(3-c.light)+' more light day'+(3-c.light>1?'s':'')+'.'; w.className='warn'; btn.disabled=true; }
-  else if (c.rest<1) { w.textContent='Select 1 rest day.'; w.className='warn'; btn.disabled=true; }
-  else if (assigned<7) { w.textContent='Assign all 7 days ('+(7-assigned)+' remaining).'; w.className='warn'; btn.disabled=true; }
-  else { w.textContent='✓ Schedule looks great — ready to build!'; w.className='warn ok'; btn.disabled=false; }
-}
-
-// ─── START / EDIT ──────────────────────────────────────────────────────────────
-function startApp() {
+function toggleTask(ti) {
+  const k = taskKey(activeTrack, activeLevel, ti);
+  state.tasksDone[k] = !state.tasksDone[k];
   save();
-  document.getElementById('setup').style.display='none';
-  document.getElementById('main').style.display='block';
-  renderTabs();
-  renderPhase();
-  updateProgress();
+  renderSession();
 }
 
-function goSetup() {
-  document.getElementById('main').style.display='none';
-  document.getElementById('setup').style.display='block';
-  buildPicker();
-}
+function completeSession() {
+  const track = TRACKS[activeTrack];
+  const alreadyCompleted = activeLevel < state.progress[activeTrack];
 
-// ─── RENDER ───────────────────────────────────────────────────────────────────
-function renderTabs() {
-  var html='';
-  phases.forEach(function(ph,i){
-    html+='<button class="ptab '+(i===curPhase?'active':'')+'" onclick="switchPhase('+i+')">';
-    html+='Phase '+(i+1)+' — '+ph.title+'<small>'+ph.weeks+'</small></button>';
-  });
-  document.getElementById('tabs').innerHTML=html;
-}
+  if (!alreadyCompleted) {
+    state.progress[activeTrack] = activeLevel + 1;
+    save();
 
-function renderPhase() {
-  var ph = phases[curPhase];
-  var wk = ph.weekRange[curWeek[curPhase]];
-
-  // week nav
-  var wnav='';
-  ph.weekRange.forEach(function(w,wi){
-    var allDone = DAYS.every(function(day){
-      var s=session(curPhase,day);
-      return s.items.every(function(_,ii){ return prog[key(curPhase,w,day,ii)]; });
-    });
-    wnav+='<button class="wbtn '+(wi===curWeek[curPhase]?'active':'')+' '+(allDone?'done':'')+'" onclick="switchWeek('+wi+')">Wk '+w+'</button>';
-  });
-
-  // 7-col grid
-  var grid='';
-  DAYS.forEach(function(day){
-    var s = session(curPhase,day);
-    var type=s.type;
-    var allDone = s.items.every(function(_,ii){ return prog[key(curPhase,wk,day,ii)]; });
-    var doneCnt = s.items.filter(function(_,ii){ return prog[key(curPhase,wk,day,ii)]; }).length;
-    var cardId = 'dc_'+curPhase+'_'+wk+'_'+day;
-
-    var items='';
-    s.items.forEach(function(item,ii){
-      var ck=prog[key(curPhase,wk,day,ii)]?'ck':'';
-      items+='<li class="'+ck+'">';
-      items+='<div class="cl-l" onclick="toggleItem(\''+day+'\','+ii+')">';
-      items+='<span class="cb"></span><span class="cl-txt">'+item.t+'</span></div>';
-      if(item.v) items+='<a class="cl-tip" href="'+item.v+'" target="_blank" rel="noopener" onclick="event.stopPropagation()">▶ watch</a>';
-      items+='</li>';
-    });
-
-    var vhtml='';
-
-    var iqhtml='';
-    if(s.iq){
-      iqhtml='<div class="iq-card"><div class="iq-lbl">⚡ Soccer IQ</div><h4>'+s.iq.title+'</h4><p>'+s.iq.text+'</p></div>';
+    const nextIdx = state.progress[activeTrack];
+    if (nextIdx < track.levels.length) {
+      const nextLevel = track.levels[nextIdx];
+      document.getElementById('unlockTitle').textContent = nextLevel.title.split(': ')[1] || nextLevel.title;
+      document.getElementById('unlockToast').classList.add('show');
+      document.getElementById('completeBtn').textContent = 'Session Complete ✓';
+      document.getElementById('completeBtn').disabled = true;
+      setTimeout(() => { goBack(); }, 1800);
+    } else {
+      document.getElementById('unlockTitle').textContent = track.name + ' fully mastered! 🏆';
+      document.getElementById('unlockToast').classList.add('show');
+      document.getElementById('completeBtn').textContent = 'Session Complete ✓';
+      document.getElementById('completeBtn').disabled = true;
+      setTimeout(() => { goBack(); }, 1800);
     }
-
-    var ctr = s.items.length>0 ? '<span class="dctr" id="ctr_'+curPhase+'_'+wk+'_'+day+'">'+doneCnt+'/'+s.items.length+'</span>' : '';
-    var emoji = type==='intense'?'🔥 Intense':type==='light'?'💡 Light':'🛌 Rest';
-
-    grid+='<div class="wcol">';
-    grid+='<div class="wcolhdr '+type+'"><div class="wcolhdr-name">'+day+'</div><div class="wcolhdr-type">'+type+'</div></div>';
-    grid+='<div class="dcard '+type+' '+(allDone&&s.items.length>0?'all-done':'')+'" id="'+cardId+'">';
-    grid+='<div class="dhdr" onclick="toggleCard(\''+cardId+'\')">';
-    grid+='<div class="dtitle">'+s.title+'</div>'+ctr;
-    grid+='<div class="dchk '+(allDone&&s.items.length>0?'done':'')+'" onclick="event.stopPropagation();markAll(\''+day+'\')" title="Mark all done">✓</div>';
-    grid+='<div class="dchev">▼</div></div>';
-    grid+='<div class="dbody">';
-    grid+='<span class="dtype-lbl '+type+'">'+emoji+'</span>';
-    grid+='<p class="ddesc">'+s.desc+'</p>';
-    grid+='<ul class="cl">'+items+'</ul>';
-    grid+=iqhtml;
-    grid+='</div></div></div>';
-  });
-
-  // pills
-  var pillsHtml='';
-  ph.pills.forEach(function(p){
-    var pts=p.split(':'); pillsHtml+='<span class="pill '+pts[0]+'">'+pts[1]+'</span>';
-  });
-
-  var html='';
-  html+='<div class="phase-hdr"><div class="phase-num">'+ph.num+'</div>';
-  html+='<div><div class="phase-ttl">'+ph.title+' — '+ph.subtitle+'</div>';
-  html+='<div class="phase-desc">'+ph.desc+'</div>';
-  html+='<div class="pills">'+pillsHtml+'</div></div></div>';
-  html+='<div class="week-nav">'+wnav+'</div>';
-  html+='<div class="wgrid">'+grid+'</div>';
-  html+='<div class="cnote"><div class="cnote-lbl">Every intense session — coach note</div>';
-  html+='<p>Always start with a 10 min dynamic warm-up and end with a 5 min cool-down stretch. Hydrate before, during, and after. Sleep 8–9 hrs — speed and power adaptations happen during sleep. Sharp or joint pain = rest 48 hrs and reassess.</p>';
-  html+='<div class="cnote-vids"><div class="cnote-vids-lbl">▶ Warm-up — watch before every intense session</div>';
-  html+='<div class="vlinks">';
-  html+='<a class="vlink" href="https://www.youtube.com/watch?v=RMDac1-Q0_A" target="_blank" rel="noopener"><div class="vthumb">▶</div><div class="vinfo"><div class="vtitle">Dynamic Warm-Up with Ball — 2 Variations</div><div class="vchan">Soccer Coaching Pro</div></div><div class="varr">↗</div></a>';
-  html+='<a class="vlink" href="https://www.youtube.com/watch?v=twmQ9cpCI48" target="_blank" rel="noopener"><div class="vthumb">▶</div><div class="vinfo"><div class="vtitle">A Skip, B Skip & High Knees — Sprint Mechanics Broken Down</div><div class="vchan">Sprint Mechanics</div></div><div class="varr">↗</div></a>';
-  html+='<a class="vlink" href="https://www.youtube.com/watch?v=9bz2jH64HQg" target="_blank" rel="noopener"><div class="vthumb">▶</div><div class="vinfo"><div class="vtitle">Full Soccer Cool Down Routine</div><div class="vchan">Progressive Soccer</div></div><div class="varr">↗</div></a>';
-  html+='</div></div></div>';
-
-  document.getElementById('content').innerHTML=html;
-}
-
-// ─── INTERACTIONS ──────────────────────────────────────────────────────────────
-function switchPhase(i){ curPhase=i; renderTabs(); renderPhase(); updateProgress(); }
-function switchWeek(wi){ curWeek[curPhase]=wi; renderPhase(); updateProgress(); }
-function toggleCard(id){ var c=document.getElementById(id); if(c) c.classList.toggle('open'); }
-
-function toggleItem(day, ii) {
-  var ph=phases[curPhase], wk=ph.weekRange[curWeek[curPhase]];
-  var k=key(curPhase,wk,day,ii);
-  prog[k]=!prog[k];
-  save();
-  patchDay(day);
-  updateProgress();
-}
-
-function markAll(day) {
-  var ph=phases[curPhase], wk=ph.weekRange[curWeek[curPhase]];
-  var s=session(curPhase,day);
-  var allDone=s.items.every(function(_,ii){ return prog[key(curPhase,wk,day,ii)]; });
-  s.items.forEach(function(_,ii){ prog[key(curPhase,wk,day,ii)]=!allDone; });
-  save();
-  patchDay(day);
-  updateProgress();
-}
-
-function patchDay(day) {
-  var ph=phases[curPhase], wk=ph.weekRange[curWeek[curPhase]];
-  var s=session(curPhase,day);
-  var cardId='dc_'+curPhase+'_'+wk+'_'+day;
-  var card=document.getElementById(cardId);
-  if(!card) return;
-  var allDone=s.items.every(function(_,ii){ return prog[key(curPhase,wk,day,ii)]; });
-  var doneCnt=s.items.filter(function(_,ii){ return prog[key(curPhase,wk,day,ii)]; }).length;
-  card.classList.toggle('all-done', allDone && s.items.length>0);
-  var ctr=document.getElementById('ctr_'+curPhase+'_'+wk+'_'+day);
-  if(ctr) ctr.textContent=doneCnt+'/'+s.items.length;
-  var dchk=card.querySelector('.dchk');
-  if(dchk) dchk.classList.toggle('done', allDone && s.items.length>0);
-  card.querySelectorAll('.cl li').forEach(function(li,idx){
-    li.classList.toggle('ck', !!prog[key(curPhase,wk,day,idx)]);
-  });
+  } else {
+    goBack();
+  }
 }
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
-buildPicker();
-var allAssigned = DAYS.every(function(d){ return sched[d] && sched[d]!=='unset'; });
-if (allAssigned) {
-  startApp();
-}
+renderTracks();
+renderChoices();
 </script>
 </body>
 </html>
