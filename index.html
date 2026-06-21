@@ -480,6 +480,7 @@ function toggleTask(ti) {
   state.tasksDone[k] = !state.tasksDone[k];
   save();
   renderSession();
+  renderTracks();
 }
 
 function resetTasks() {
@@ -490,6 +491,7 @@ function resetTasks() {
   });
   save();
   renderSession();
+  renderTracks();
 }
 
 function rewindProgress() {
@@ -499,6 +501,7 @@ function rewindProgress() {
     save();
   }
   renderSession();
+  renderTracks();
 }
 
 function completeSession() {
