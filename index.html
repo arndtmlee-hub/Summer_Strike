@@ -39,13 +39,14 @@ body{background:#000;color:var(--white);font-family:'DM Sans',sans-serif;font-si
 
 /* SESSION CARDS - CHOICE SCREEN */
 .choices{display:flex;flex-direction:column;gap:12px;margin-bottom:28px}
-.choice-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:16px}
-.choice-card:hover{border-color:rgba(255,255,255,.2);transform:translateY(-1px)}
+.choice-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;transition:all .2s;display:flex;flex-direction:column;gap:0}
+.choice-card:hover{border-color:rgba(255,255,255,.2)}
 .choice-card.speed{border-left:3px solid var(--speed)}
 .choice-card.kick{border-left:3px solid var(--kick)}
 .choice-card.iq{border-left:3px solid var(--iq)}
 .choice-card.locked{opacity:.4;cursor:not-allowed}
 .choice-card.locked:hover{transform:none;border-color:var(--border)}
+.choice-clickzone{display:flex;align-items:center;gap:16px;cursor:pointer}
 .choice-icon{font-size:28px;flex-shrink:0;width:44px;text-align:center}
 .choice-info{flex:1}
 .choice-track-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;margin-bottom:2px}
@@ -57,7 +58,16 @@ body{background:#000;color:var(--white);font-family:'DM Sans',sans-serif;font-si
 .choice-level{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:4px}
 .choice-arrow{font-size:18px;color:var(--muted);flex-shrink:0}
 .lock-icon{font-size:18px;flex-shrink:0}
+.level-dots{display:flex;gap:6px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.06);flex-wrap:wrap}
+.level-dot{width:26px;height:26px;border-radius:50%;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.03);color:var(--muted);font-size:10px;font-family:'DM Mono',monospace;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.level-dot:hover{border-color:rgba(255,255,255,.3)}
+.level-dot.past{background:rgba(184,245,54,.12);border-color:rgba(184,245,54,.3);color:var(--lime)}
+.level-dot.current{border-color:var(--white);color:var(--white)}
+.level-dot.locked{opacity:.3;cursor:not-allowed}
 
+.reset-row{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:16px}
+.reset-link{background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:underline;text-underline-offset:3px;padding:4px}
+.reset-link:hover{color:var(--off)}
 /* SESSION DETAIL VIEW */
 #sessionView{display:none}
 .back-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);background:none;border:none;cursor:pointer;margin-bottom:18px;font-family:'DM Sans',sans-serif;padding:0}
@@ -350,15 +360,32 @@ function renderChoices() {
     const levelIdx = isMaxed ? track.levels.length - 1 : nextLevelIdx;
     const level = track.levels[levelIdx];
 
-    html += `<div class="choice-card ${track.color}" onclick="openSession('${key}', ${levelIdx})">
-      <div class="choice-icon">${track.icon}</div>
-      <div class="choice-info">
-        <div class="choice-track-label ${track.color}">${track.name}</div>
-        <div class="choice-title">${level.title.split(': ')[1] || level.title}</div>
-        <div class="choice-desc">${level.desc}</div>
-        <div class="choice-level">${isMaxed ? 'Mastered — replay anytime' : 'Level ' + (levelIdx+1) + ' of ' + track.levels.length}</div>
+    // small row of level dots — tap any unlocked level to jump straight to it
+    let dotsHtml = '<div class="level-dots">';
+    track.levels.forEach((lv, li) => {
+      const unlocked = li <= completedCount; // unlocked levels: all completed ones + the current next one
+      const isCurrent = li === levelIdx;
+      const isPastComplete = li < completedCount;
+      let cls = 'level-dot';
+      if (!unlocked) cls += ' locked';
+      if (isCurrent) cls += ' current';
+      if (isPastComplete) cls += ' past';
+      dotsHtml += `<button class="${cls}" ${unlocked ? `onclick="event.stopPropagation();openSession('${key}',${li})"` : 'disabled'} title="Level ${li+1}">${isPastComplete?'✓':(li+1)}</button>`;
+    });
+    dotsHtml += '</div>';
+
+    html += `<div class="choice-card ${track.color}">
+      <div class="choice-clickzone" onclick="openSession('${key}', ${levelIdx})">
+        <div class="choice-icon">${track.icon}</div>
+        <div class="choice-info">
+          <div class="choice-track-label ${track.color}">${track.name}</div>
+          <div class="choice-title">${level.title.split(': ')[1] || level.title}</div>
+          <div class="choice-desc">${level.desc}</div>
+          <div class="choice-level">${isMaxed ? 'Mastered — replay anytime' : 'Level ' + (levelIdx+1) + ' of ' + track.levels.length}</div>
+        </div>
+        <div class="choice-arrow">→</div>
       </div>
-      <div class="choice-arrow">→</div>
+      ${completedCount > 0 ? dotsHtml : ''}
     </div>`;
   });
   document.getElementById('choices').innerHTML = html;
@@ -440,6 +467,10 @@ function renderSession() {
       <div class="unlock-toast-label">🔓 Unlocked</div>
       <div class="unlock-toast-title" id="unlockTitle"></div>
     </div>
+    <div class="reset-row">
+      <button class="reset-link" onclick="resetTasks()">↺ Uncheck all tasks on this level</button>
+      ${alreadyCompleted ? `<button class="reset-link" onclick="rewindProgress()">⏪ Move progress back to this level</button>` : ''}
+    </div>
   `;
   document.getElementById('sessionContent').innerHTML = html;
 }
@@ -448,6 +479,25 @@ function toggleTask(ti) {
   const k = taskKey(activeTrack, activeLevel, ti);
   state.tasksDone[k] = !state.tasksDone[k];
   save();
+  renderSession();
+}
+
+function resetTasks() {
+  const track = TRACKS[activeTrack];
+  const level = track.levels[activeLevel];
+  level.tasks.forEach((_, ti) => {
+    delete state.tasksDone[taskKey(activeTrack, activeLevel, ti)];
+  });
+  save();
+  renderSession();
+}
+
+function rewindProgress() {
+  // Move the track's unlocked progress back to this level (so this level is the "next" one again)
+  if (activeLevel < state.progress[activeTrack]) {
+    state.progress[activeTrack] = activeLevel;
+    save();
+  }
   renderSession();
 }
 
